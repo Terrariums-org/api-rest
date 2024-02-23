@@ -1,7 +1,7 @@
 import { configService } from 'src/shared/config/domain/configEnv';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
-export const connectionOptions : DataSourceOptions = {
+export const connectionOptions: DataSourceOptions = {
   type: 'mysql',
   host: configService.get('HOST'),
   port: configService.get('PORT'),
