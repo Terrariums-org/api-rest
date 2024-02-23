@@ -1,22 +1,17 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from './users/infraestructure/users.module';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { config } from 'dotenv';
-
-config();
-
-const mySqlConnection: TypeOrmModuleOptions = {
-  type: 'mysql',
-  host: process.env.HOST,
-  port: parseInt(process.env.PORT, 10),
-  username: process.env.USER,
-  password: process.env.PASSWORD,
-  database: process.env.DATABASE,
-  entities: [__dirname + '/**/*.entity{.ts,.js}'],
-  synchronize: true,
-};
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
+import { connectionOptions } from './shared/connection/domain/entities/connectionOptions';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(mySqlConnection), UsersModule],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: `.${process.env.NODE_ENV}.env`,
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRoot(connectionOptions),
+    UsersModule,
+  ],
 })
 export class AppModule {}
