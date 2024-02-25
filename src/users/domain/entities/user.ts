@@ -1,9 +1,11 @@
-import { UserProfile } from "src/users/infraestructure/ports/mysql/user_profile.entity";
+import { UserProfileInterface } from './user_profile';
+import { TerrariumsInterface } from 'src/terrariums/domain/entities';
 
 export interface UserInterface {
-  id : number;
+  id: number;
   email: string;
   username: string;
   passwordUser: string;
-  id_user_profile: UserProfile;
+  userProfile: UserProfileInterface;
+  terrariums: TerrariumsInterface[];
 }

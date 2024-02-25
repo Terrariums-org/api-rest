@@ -2,11 +2,14 @@ import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { UserInterface } from 'src/users/domain/entities/user';
 import { UserProfile } from './user_profile.entity';
+import { Terrariums } from 'src/terrariums/infraestructure/ports/mysql';
+
 
 @Entity({ name: 'users' })
 export class User implements UserInterface {
@@ -20,5 +23,7 @@ export class User implements UserInterface {
   passwordUser: string;
   @OneToOne(() => UserProfile)
   @JoinColumn({ name: 'id_user_profile' })
-  id_user_profile: UserProfile;
+  userProfile: UserProfile;
+  @OneToMany(() => Terrariums, (terrariums) => terrariums.id_user)
+  terrariums: Terrariums[];
 }

@@ -1,5 +1,5 @@
 ## Description
-If you want to start the project, create a new file called ".env" with the following variables
+If you want to start the project, create a new file called ".dev.env" with the following variables
 
 ```bash
 # database host
