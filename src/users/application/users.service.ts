@@ -5,11 +5,13 @@ import { User } from '../infraestructure/ports/mysql/user.entity';
 import { Repository } from 'typeorm';
 import { UserServiceRepository } from '../domain/repositories/userServiceRepository';
 import { UserInterface } from '../domain/entities';
+import { UserProfile } from '../infraestructure/ports/mysql/user_profile.entity';
 
 @Injectable()
 export class UsersService implements UserServiceRepository {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(UserProfile) private readonly userProfileRepository: Repository<UserProfile>,
   ) {}
 
   async loginService(user: UpdateUserDto): Promise<String> {
@@ -30,8 +32,8 @@ export class UsersService implements UserServiceRepository {
   
   async removeService(id: number): Promise<void> {
     try {
-      const result = await this.userRepository.delete(id);
-      if (result.raw)
+      const result = await this.userRepository.delete(id) && await this.userProfileRepository.delete(id);
+      if (!result.raw)
         throw new HttpException('No affected user', HttpStatus.NOT_FOUND);
     } catch (err: any) {
       throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
