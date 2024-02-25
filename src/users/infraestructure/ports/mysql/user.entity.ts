@@ -23,7 +23,7 @@ export class User implements UserInterface {
   passwordUser: string;
   @OneToOne(() => UserProfile)
   @JoinColumn({ name: 'id_user_profile' })
-  id_user_profile: UserProfile;
+  userProfile: UserProfile;
   @OneToMany(() => Terrariums, (terrariums) => terrariums.id_user)
   terrariums: Terrariums[];
 }
