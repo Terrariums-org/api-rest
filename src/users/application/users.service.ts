@@ -1,32 +1,40 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto, CreateUserProfile, UpdateUserDto } from '../domain/dto';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { UpdateUserDto } from '../domain/dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../infraestructure/ports/mysql/user.entity';
 import { Repository } from 'typeorm';
-import { UserProfile } from '../infraestructure/ports/mysql/user_profile.entity';
+import { UserServiceRepository } from '../domain/repositories/userServiceRepository';
+import { UserInterface } from '../domain/entities';
 
 @Injectable()
-export class UsersService {
+export class UsersService implements UserServiceRepository {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
-  create(createUserDto: CreateUserDto) {
-    return this.userRepository.save(createUserDto);
+
+  async loginService(user: UpdateUserDto): Promise<String> {
+    try {
+      throw new Error('Method not implemented.');
+    } catch (err: any) {
+      throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  findAll() {
-    return "This action finds all users";
+  async updateService(user: UpdateUserDto): Promise<UserInterface> {
+    try {
+      return await this.userRepository.save(user);
+    } catch (err: any) {
+      throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  
+  async removeService(id: number): Promise<void> {
+    try {
+      const result = await this.userRepository.delete(id);
+      if (result.raw)
+        throw new HttpException('No affected user', HttpStatus.NOT_FOUND);
+    } catch (err: any) {
+      throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
