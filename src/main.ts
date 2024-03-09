@@ -53,7 +53,7 @@ async function startServer() {
     ],
   };
   const document = SwaggerModule.createDocument(app, config, configOptions);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('swagger', app, document);
 
   await app.listen(3000);
 }

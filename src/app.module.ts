@@ -1,15 +1,14 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from './users/infraestructure/users.module';
 import { ConfigModule } from '@nestjs/config';
-import { TerrariumsModule } from './terrariums/terrariums.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './shared/config/domain/configEnv';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { TerrariumsModule } from './terrariums/terrariums.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `.${process.env.NODE_ENV}.env`,
+      envFilePath: `.dev.env`,
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({

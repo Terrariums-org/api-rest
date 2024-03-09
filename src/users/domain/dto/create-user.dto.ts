@@ -27,7 +27,7 @@ export class CreateUserDto {
   ) {
     this.username = username;
     this.email = email;
-    this.password = password;
+    this.passwordUser = password;
     this.userProfile = userProfile;
   }
 }

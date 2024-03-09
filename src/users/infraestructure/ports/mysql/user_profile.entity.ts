@@ -1,5 +1,6 @@
 import { UserProfileInterface } from 'src/users/domain/entities/user_profile';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from './user.entity';
 
 @Entity({ name: 'users_profile' })
 export class UserProfile implements UserProfileInterface {
