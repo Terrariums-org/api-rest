@@ -3,7 +3,6 @@ import { UsersModule } from './users/infraestructure/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { TerrariumsModule } from './terrariums/terrariums.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { connectionOptions } from './shared/connection/domain/entities/connectionOptions';
 import { configService } from './shared/config/domain/configEnv';
 
 @Module({

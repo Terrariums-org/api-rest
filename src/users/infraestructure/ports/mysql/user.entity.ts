@@ -10,20 +10,19 @@ import { UserInterface } from 'src/users/domain/entities/user';
 import { UserProfile } from './user_profile.entity';
 import { Terrariums } from 'src/terrariums/infraestructure/ports/mysql';
 
-
 @Entity({ name: 'users' })
 export class User implements UserInterface {
   @PrimaryGeneratedColumn()
-  id: number;
+  readonly id: number;
   @Column({ nullable: false, length: 60 })
-  email: string;
+  readonly email: string;
   @Column({ unique: true, nullable: false, length: 45 })
-  username: string;
+  readonly username: string;
   @Column({ nullable: false })
-  passwordUser: string;
+  readonly passwordUser: string;
   @OneToOne(() => UserProfile)
   @JoinColumn({ name: 'id_user_profile' })
-  id_user_profile: UserProfile;
+  readonly userProfile: UserProfile;
   @OneToMany(() => Terrariums, (terrariums) => terrariums.id_user)
-  terrariums: Terrariums[];
+  readonly terrariums: Terrariums[];
 }

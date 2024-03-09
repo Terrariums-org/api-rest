@@ -4,9 +4,9 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity({ name: 'users_profile' })
 export class UserProfile implements UserProfileInterface {
   @PrimaryGeneratedColumn()
-  id: number;
+  readonly id: number;
   @Column({ nullable: false, length: 60 })
-  name: string;
+  readonly name: string;
   @Column({ nullable: true, length: 60 })
-  last_name: string;
+  readonly last_name: string;
 }

@@ -1,5 +1,14 @@
+import { UserInterface } from 'src/users/domain/entities';
+import { TerrariumsProfileInterface } from '../entities';
+import { IsNotEmptyObject, IsString, ValidateNested } from 'class-validator';
+
 export class CreateTerrariumDto {
+  @IsString()
   name: string;
-  id_user: number;
-  id_terrarium_profile: number;
+  @IsNotEmptyObject()
+  @ValidateNested()
+  id_terrarium_profile: TerrariumsProfileInterface;
+  @IsNotEmptyObject()
+  @ValidateNested()
+  id_user: UserInterface;
 }
