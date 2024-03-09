@@ -1,5 +1,8 @@
+import { UserInterface } from "./user";
+
 export interface UserProfileInterface {
-  readonly id: number;
-  readonly name: string;
-  readonly last_name: string;
+  id: number;
+  name: string;
+  last_name: string;
+  user : UserInterface;
 }

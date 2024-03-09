@@ -19,8 +19,8 @@ export class User implements UserInterface {
   @Column({ unique: true, nullable: false, length: 45 })
   readonly username: string;
   @Column({ nullable: false })
-  readonly passwordUser: string;
-  @OneToOne(() => UserProfile)
+  passwordUser: string;
+  @OneToOne(() => UserProfile, (user) => user.user, { cascade: true })
   @JoinColumn({ name: 'id_user_profile' })
   readonly userProfile: UserProfile;
   @OneToMany(() => Terrariums, (terrariums) => terrariums.id_user)

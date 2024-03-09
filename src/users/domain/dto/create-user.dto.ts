@@ -1,23 +1,23 @@
-import {
-  IsNotEmpty,
-  IsNotEmptyObject,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
+import { IsNotEmpty, IsNotEmptyObject, IsString, ValidateNested } from 'class-validator';
 import { CreateUserProfile } from './create-user_profile';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
+  @ApiProperty()
   username: string;
-  @IsNotEmpty()
+
   @IsString()
+  @ApiProperty()
+  passwordUser: string;
+
+  @IsString()
+  @ApiProperty()
   email: string;
-  @IsNotEmpty()
-  @IsString()
-  password: string;
-  @IsNotEmptyObject()
+  
   @ValidateNested()
+  @ApiProperty()
   userProfile: CreateUserProfile;
   constructor(
     username: string,
