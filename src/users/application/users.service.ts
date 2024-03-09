@@ -11,7 +11,7 @@ export class UsersService implements UserServiceRepository {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
-
+  
   async loginService(user: UpdateUserDto): Promise<String> {
     try {
       throw new Error('Method not implemented.');
@@ -27,12 +27,12 @@ export class UsersService implements UserServiceRepository {
       throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-  
+
   async removeService(id: number): Promise<void> {
     try {
       const result = await this.userRepository.delete(id);
       if (result.raw)
-        throw new HttpException('No affected user', HttpStatus.NOT_FOUND);
+        throw new HttpException('User was not affected', HttpStatus.NOT_FOUND);
     } catch (err: any) {
       throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
     }

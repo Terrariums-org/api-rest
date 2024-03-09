@@ -1,5 +1,5 @@
 export interface UserProfileInterface {
-  id: number;
-  name: string;
-  last_name: string;
+  readonly id: number;
+  readonly name: string;
+  readonly last_name: string;
 }

@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
-import { CreateTerrariumDto } from 'src/terrariums/domain/dto';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateTerrariumDto } from 'src/terrariums/domain/dto';
+import { TerrariumsInterface } from 'src/terrariums/domain/entities';
+import { TerrariumsServiceRepository } from 'src/terrariums/domain/repositories/terrariumsServiceRepository';
+import { Terrariums } from 'src/terrariums/infraestructure/ports/mysql';
+import { Repository } from 'typeorm';
 
 @Injectable()
-export class TerrariumsService {
-  create(createTerrariumDto: CreateTerrariumDto) {
-    return 'This action adds a new terrarium';
+export class TerrariumsService implements TerrariumsServiceRepository {
+  constructor(
+    @InjectRepository(Terrariums)
+    private readonly terrariumsRepository: Repository<Terrariums>,
+  ) {}
+
+  async getAllService(): Promise<TerrariumsInterface[]> {
+    try {
+      return await this.terrariumsRepository.find();
+    } catch (err: any) {
+      throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  findAll() {
-    return `This action returns all terrariums`;
+  async removeService(id: number): Promise<void> {
+    try {
+      const result = await this.terrariumsRepository.delete(id);
+      if (result.raw)
+        throw new HttpException(
+          'Terrarium was not affected',
+          HttpStatus.NOT_FOUND,
+        );
+    } catch (err: any) {
+      throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} terrarium`;
-  }
-
-  update(id: number, updateTerrariumDto: UpdateTerrariumDto) {
-    return `This action updates a #${id} terrarium`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} terrarium`;
+  async updateService(
+    terrarium: UpdateTerrariumDto,
+  ): Promise<TerrariumsInterface> {
+    try {
+      return await this.terrariumsRepository.save(terrarium);
+    } catch (err: any) {
+      throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
