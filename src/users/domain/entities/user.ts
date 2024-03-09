@@ -6,6 +6,6 @@ export interface UserInterface {
   email: string;
   username: string;
   passwordUser: string;
-  id_user_profile: UserProfileInterface;
+  userProfile: UserProfileInterface;
   terrariums: TerrariumsInterface[];
 }

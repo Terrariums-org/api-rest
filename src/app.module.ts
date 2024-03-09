@@ -3,8 +3,8 @@ import { UsersModule } from './users/infraestructure/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { TerrariumsModule } from './terrariums/terrariums.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { connectionOptions } from './shared/connection/domain/entities/connectionOptions';
 import { configService } from './shared/config/domain/configEnv';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 @Module({
   imports: [
@@ -16,7 +16,7 @@ import { configService } from './shared/config/domain/configEnv';
       type: 'mysql',
       host: configService.get('HOST'),
       port: configService.get('PORT'),
-      username: configService.get('USER'),
+      username: configService.get('USERDB'),
       password: configService.get('PASSWORD'),
       database: configService.get('DATABASE'),
       entities: [__dirname + '/**/*.entity{.ts,.js}'],

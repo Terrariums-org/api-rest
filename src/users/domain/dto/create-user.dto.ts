@@ -1,9 +1,21 @@
-import { UserProfile } from "src/users/infraestructure/ports/mysql/user_profile.entity";
+import { IsNotEmpty, IsNotEmptyObject, IsString, ValidateNested } from 'class-validator';
+import { CreateUserProfile } from './create-user_profile';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
+  @IsString()
+  @ApiProperty()
   username: string;
-  password: string;
-  name: string;
-  lastname: string;
-  id_user_profile: UserProfile;
+
+  @IsString()
+  @ApiProperty()
+  passwordUser: string;
+
+  @IsString()
+  @ApiProperty()
+  email: string;
+  
+  @ValidateNested()
+  @ApiProperty()
+  userProfile: CreateUserProfile;
 }

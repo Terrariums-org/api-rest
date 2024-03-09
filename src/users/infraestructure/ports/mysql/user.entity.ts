@@ -21,9 +21,9 @@ export class User implements UserInterface {
   username: string;
   @Column({ nullable: false })
   passwordUser: string;
-  @OneToOne(() => UserProfile)
+  @OneToOne(() => UserProfile, (user) => user.user, { cascade: true })
   @JoinColumn({ name: 'id_user_profile' })
-  id_user_profile: UserProfile;
+  userProfile: UserProfile;
   @OneToMany(() => Terrariums, (terrariums) => terrariums.id_user)
   terrariums: Terrariums[];
 }

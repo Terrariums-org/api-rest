@@ -1,31 +1,42 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto } from '../domain/dto';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { UpdateUserDto } from '../domain/dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../infraestructure/ports/mysql/user.entity';
 import { Repository } from 'typeorm';
+import { UserServiceRepository } from '../domain/repositories/userServiceRepository';
+import { UserInterface } from '../domain/entities';
+import { UserProfile } from '../infraestructure/ports/mysql/user_profile.entity';
 
 @Injectable()
-export class UsersService {
+export class UsersService implements UserServiceRepository {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(UserProfile) private readonly userProfileRepository: Repository<UserProfile>,
   ) {}
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+
+  async loginService(user: UpdateUserDto): Promise<String> {
+    try {
+      throw new Error('Method not implemented.');
+    } catch (err: any) {
+      throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  findAll(): Promise<User[]> {
-    return this.userRepository.find();
+  async updateService(user: UpdateUserDto): Promise<UserInterface> {
+    try {
+      return await this.userRepository.save(user);
+    } catch (err: any) {
+      throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  
+  async removeService(id: number): Promise<void> {
+    try {
+      const result = await this.userRepository.delete(id) && await this.userProfileRepository.delete(id);
+      if (!result.raw)
+        throw new HttpException('No affected user', HttpStatus.NOT_FOUND);
+    } catch (err: any) {
+      throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
