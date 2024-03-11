@@ -1,5 +1,4 @@
-import { IsInt, IsNotEmpty, IsNotEmptyObject, IsString, ValidateNested } from 'class-validator';
-import { CreateUserProfile } from './create-user_profile';
+import { IsInt, IsString, ValidateNested } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { UpdateUserProfile } from './update-user_profle';
 
@@ -19,7 +18,7 @@ export class CreateUserDto {
   @IsString()
   @ApiProperty()
   email: string;
-  
+
   @ValidateNested()
   @ApiProperty()
   userProfile: UpdateUserProfile;

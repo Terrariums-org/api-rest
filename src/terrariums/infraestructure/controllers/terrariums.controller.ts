@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { TerrariumsService } from 'src/terrariums/application/services/terrariums.service';
 import { CreateTerrariumDto } from 'src/terrariums/domain/dto';
 import { UpdateTerrariumDto } from 'src/terrariums/domain/dto';
@@ -27,7 +37,10 @@ export class TerrariumsController {
 
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
-  update(@Param('id') id: string, @Body() updateTerrariumDto: UpdateTerrariumDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateTerrariumDto: UpdateTerrariumDto,
+  ) {
     return this.terrariumsService.update(+id, updateTerrariumDto);
   }
 

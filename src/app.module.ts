@@ -4,7 +4,6 @@ import { ConfigModule } from '@nestjs/config';
 import { TerrariumsModule } from './terrariums/terrariums.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './shared/config/domain/configEnv';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 @Module({
   imports: [

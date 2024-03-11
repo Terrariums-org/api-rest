@@ -6,7 +6,6 @@ import { Repository } from 'typeorm';
 import { UserServiceRepository } from '../domain/repositories/userServiceRepository';
 import { UserInterface } from '../domain/entities';
 import { UserProfile } from '../infraestructure/ports/mysql/user_profile.entity';
-import { Terrariums } from 'src/terrariums/infraestructure/ports/mysql';
 
 @Injectable()
 export class UsersService implements UserServiceRepository {

@@ -7,7 +7,7 @@ $ HOST = YOUR_DB_HOST
 # database port
 $ PORT = YOUR_DB_PORT
 # database username
-$ USER = YOUR_DB_USERNAME
+$ USERDB = YOUR_DB_USERNAME
 # database password
 $ PASSWORD = YOUR_DB_PASSWORD
 # database name
