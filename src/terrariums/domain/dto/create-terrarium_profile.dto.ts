@@ -2,27 +2,27 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsString } from "class-validator";
 
 export class CreateTerrariumProfileDto {
-  @IsString()
+  @IsInt()
   @ApiProperty()
-  max_temp: string;
+  max_temp: number;
 
   @IsInt()
   @ApiProperty()
-  min_temp: string;
+  min_temp: number;
 
   @IsInt()
   @ApiProperty()
-  max_humidity: string;
+  max_humidity: number;
 
   @IsInt()
   @ApiProperty()
-  min_humidity: string;
+  min_humidity: number;
 
   @IsInt()
   @ApiProperty()
-  max_uv: string;
+  max_uv: number;
 
   @IsInt()
   @ApiProperty()
-  min_uv: string;
+  min_uv: number;
 }

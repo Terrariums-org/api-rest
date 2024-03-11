@@ -1,9 +1,7 @@
 import { IsNotEmpty, IsNotEmptyObject, IsString, ValidateNested } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { User } from 'src/users/infraestructure/ports/mysql/user.entity';
 import { CreateTerrariumProfileDto } from './create-terrarium_profile.dto';
-import { UserProfile } from 'src/users/infraestructure/ports/mysql/user_profile.entity';
-import { CreateUserDto, CreateUserProfile } from 'src/users/domain/dto';
+import { CreateUserDto} from 'src/users/domain/dto';
 
 export class CreateTerrariumDto {
   @IsString()
@@ -18,5 +16,6 @@ export class CreateTerrariumDto {
 
   @ValidateNested()
   @ApiProperty()
+  @IsNotEmptyObject()
   user: CreateUserDto;
 }

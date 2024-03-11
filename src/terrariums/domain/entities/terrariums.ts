@@ -5,5 +5,5 @@ export interface TerrariumsInterface {
   id: number;
   name: string;
   id_user: UserInterface;
-  id_terrarium_profile: TerrariumsProfileInterface;
+  terrariumProfile: TerrariumsProfileInterface;
 }
