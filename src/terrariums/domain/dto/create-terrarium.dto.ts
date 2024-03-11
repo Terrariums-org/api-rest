@@ -1,8 +1,22 @@
-import { UserInterface } from "src/users/domain/entities";
-import { TerrariumsProfileInterface } from "../entities";
+import { IsNotEmpty, IsNotEmptyObject, IsString, ValidateNested } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { User } from 'src/users/infraestructure/ports/mysql/user.entity';
+import { CreateTerrariumProfileDto } from './create-terrarium_profile.dto';
+import { UserProfile } from 'src/users/infraestructure/ports/mysql/user_profile.entity';
+import { CreateUserDto, CreateUserProfile } from 'src/users/domain/dto';
 
 export class CreateTerrariumDto {
+  @IsString()
+  @ApiProperty()
+  @IsNotEmpty()
   name: string;
-  id_terrarium_profile: TerrariumsProfileInterface;
-  id_user: UserInterface;
+
+  @ValidateNested()
+  @ApiProperty()
+  @IsNotEmptyObject()
+  terrarium_profile: CreateTerrariumProfileDto;
+
+  @ValidateNested()
+  @ApiProperty()
+  user: CreateUserDto;
 }

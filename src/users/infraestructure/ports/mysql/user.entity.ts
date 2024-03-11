@@ -10,7 +10,6 @@ import { UserInterface } from 'src/users/domain/entities/user';
 import { UserProfile } from './user_profile.entity';
 import { Terrariums } from 'src/terrariums/infraestructure/ports/mysql';
 
-
 @Entity({ name: 'users' })
 export class User implements UserInterface {
   @PrimaryGeneratedColumn()

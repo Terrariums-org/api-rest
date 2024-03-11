@@ -5,7 +5,6 @@ import { User } from './user.entity';
 
 @Entity({ name: 'users_profile' })
 export class UserProfile implements UserProfileInterface {
-  
   @PrimaryGeneratedColumn()
   id: number;
   @Column({ nullable: false, length: 60 })
