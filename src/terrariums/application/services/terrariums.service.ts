@@ -1,6 +1,6 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateTerrariumDto } from 'src/terrariums/domain/dto';
+import { CustomError } from 'src/shared/utils/Custom_error';
 import { UpdateTerrariumDto } from 'src/terrariums/domain/dto';
 import { TerrariumsInterface } from 'src/terrariums/domain/entities';
 import {
@@ -24,27 +24,29 @@ export class TerrariumsService {
     try {
       return await this.terrariumsRepository.save(createTerrariumDto);
     } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+      throw CustomError.createCustomError('INTERNAL_SERVER_ERROR');
     }
   }
 
   async findAll(): Promise<TerrariumsInterface[]> {
     try {
-      return await this.terrariumsRepository.find({
+      const terrariums = await this.terrariumsRepository.find({
         relations: {
           user: true,
           terrariumProfile: true,
         },
-        where: {},
       });
+      if (terrariums.length)
+        throw new CustomError('NO_CONTENT', 'No hay terrarios registrados');
+      return terrariums;
     } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+      throw CustomError.createCustomError('INTERNAL_SERVER_ERROR');
     }
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<TerrariumsInterface> {
     try {
-      return this.terrariumsRepository.findOne({
+      const terrarium = await this.terrariumsRepository.findOne({
         where: {
           id: id,
         },
@@ -53,20 +55,23 @@ export class TerrariumsService {
           terrariumProfile: true,
         },
       });
+      if (terrarium)
+        throw new CustomError('NOT_FOUND', 'Terrario no encontrado');
+      return terrarium;
     } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+      throw CustomError.createCustomError(error.message);
     }
   }
 
   async remove(id: number): Promise<void> {
     try {
       const result =
-      (await this.terrariumsRepository.delete(id)) &&
-      (await this.terrariumsProfileRepository.delete(id));
-    if (!result.raw)
-      throw new HttpException('No affected user', HttpStatus.NOT_FOUND);
+        (await this.terrariumsRepository.delete(id)) &&
+        (await this.terrariumsProfileRepository.delete(id));
+      if (!result.raw)
+        throw new CustomError('NOT_FOUND', 'Terrario no encontrado');
     } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+      throw CustomError.createCustomError(error.message);
     }
   }
 }

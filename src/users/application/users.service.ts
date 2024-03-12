@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UpdateUserDto } from '../domain/dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../infraestructure/ports/mysql/user.entity';
@@ -19,20 +19,22 @@ export class UsersService implements UserServiceRepository {
   async loginService(user: UpdateUserDto): Promise<UserInterface> {
     try {
       let loginUser = await this.userRepository.findOne({
-        where: user,
+        where: {
+          email: user?.email,
+          passwordUser: user?.passwordUser,
+        },
         relations: {
           userProfile: true,
           terrariums: true,
         },
       });
-      console.log(loginUser)
       if (loginUser) {
         return loginUser;
       } else {
         throw new CustomError('NOT_FOUND', 'Credenciales Invalidas');
-      } 
+      }
     } catch (err) {
-      CustomError.createCustomError(err.message);
+      throw CustomError.createCustomError(err.message);
     }
   }
 
@@ -43,7 +45,7 @@ export class UsersService implements UserServiceRepository {
       }
       return await this.userRepository.save(user);
     } catch (err) {
-      CustomError.createCustomError(err.message);
+      throw CustomError.createCustomError(err.message);
     }
   }
 
