@@ -16,28 +16,6 @@ export class UsersService implements UserServiceRepository {
     private readonly userProfileRepository: Repository<UserProfile>,
   ) {}
 
-  async loginService(user: UpdateUserDto): Promise<UserInterface> {
-    try {
-      let loginUser = await this.userRepository.findOne({
-        where: {
-          email: user?.email,
-          passwordUser: user?.passwordUser,
-        },
-        relations: {
-          userProfile: true,
-          terrariums: true,
-        },
-      });
-      if (loginUser) {
-        return loginUser;
-      } else {
-        throw new CustomError('NOT_FOUND', 'Credenciales Invalidas');
-      }
-    } catch (err) {
-      throw CustomError.createCustomError(err.message);
-    }
-  }
-
   async updateService(user: UpdateUserDto): Promise<UserInterface> {
     try {
       if (!user.terrariums) {

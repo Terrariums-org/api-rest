@@ -15,12 +15,6 @@ import { UpdateUserDto } from '../../domain/dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post('login')
-  @HttpCode(HttpStatus.ACCEPTED)
-  async login(@Body() createUser: UpdateUserDto) {
-    return this.usersService.loginService(createUser);
-  }
-
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createUser: UpdateUserDto) {
