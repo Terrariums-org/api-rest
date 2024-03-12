@@ -1,6 +1,7 @@
 import { IsInt, IsString, ValidateNested } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { UpdateUserProfile } from './update-user_profle';
+import { TerrariumsInterface } from 'src/terrariums/domain/entities';
 
 export class CreateUserDto {
   @IsInt()
@@ -22,4 +23,8 @@ export class CreateUserDto {
   @ValidateNested()
   @ApiProperty()
   userProfile: UpdateUserProfile;
+
+  @ValidateNested()
+  @ApiProperty()
+  terrariums: TerrariumsInterface[];
 }

@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { UserServiceRepository } from '../domain/repositories/userServiceRepository';
 import { UserInterface } from '../domain/entities';
 import { UserProfile } from '../infraestructure/ports/mysql/user_profile.entity';
+import { TerrariumsService } from 'src/terrariums/application/services/terrariums.service';
 
 @Injectable()
 export class UsersService implements UserServiceRepository {
@@ -40,9 +41,10 @@ export class UsersService implements UserServiceRepository {
 
   async updateService(user: UpdateUserDto): Promise<UserInterface> {
     try {
-      let newUser = await this.userRepository.save(user);
-      newUser.terrariums = [];
-      return this.userRepository.save(newUser);
+      if (!user.terrariums) {
+        user.terrariums = [];
+      }
+      return await this.userRepository.save(user);
     } catch (err: any) {
       throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
     }

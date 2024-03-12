@@ -17,7 +17,8 @@ export class Terrariums implements TerrariumsInterface {
   @Column({ length: 60 })
   name: string;
   @ManyToOne(() => User, (user) => user.terrariums)
-  id_user: User;
+  @JoinColumn({ name: 'id_user' })
+  user: User;
   @OneToOne(() => TerrariumsProfile, (terrarium) => terrarium.terrarium, {
     cascade: true,
   })

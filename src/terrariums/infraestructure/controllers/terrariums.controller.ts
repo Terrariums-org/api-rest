@@ -35,15 +35,6 @@ export class TerrariumsController {
     return this.terrariumsService.findOne(+id);
   }
 
-  @Patch(':id')
-  @HttpCode(HttpStatus.OK)
-  update(
-    @Param('id') id: string,
-    @Body() updateTerrariumDto: UpdateTerrariumDto,
-  ) {
-    return this.terrariumsService.update(+id, updateTerrariumDto);
-  }
-
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   remove(@Param('id') id: string) {

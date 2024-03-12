@@ -23,6 +23,6 @@ export class User implements UserInterface {
   @OneToOne(() => UserProfile, (user) => user.user, { cascade: true })
   @JoinColumn({ name: 'id_user_profile' })
   userProfile: UserProfile;
-  @OneToMany(() => Terrariums, (terrariums) => terrariums.id_user)
+  @OneToMany(() => Terrariums, (terrariums) => terrariums.user)
   terrariums: Terrariums[];
 }

@@ -1,7 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber } from 'class-validator';
+import { IsInt, IsNumber } from 'class-validator';
 
 export class CreateTerrariumProfileDto {
+  @IsInt()
+  @ApiProperty()
+  id: number;
+
   @IsNumber({ allowInfinity: false, allowNaN: false, maxDecimalPlaces: 5 })
   @ApiProperty()
   max_temp: number;
