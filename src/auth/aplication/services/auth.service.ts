@@ -13,17 +13,14 @@ export class AuthService implements AuthServiceRepository {
   ) {}
   async loginService(user: CreateLoginDTO): Promise<string> {
     try {
-      let loginUser = await this.userRepository.findOne({
+      const loginUser = await this.userRepository.findOne({
         where: {
           email: user?.email,
           passwordUser: user?.passwordUser,
         },
-        relations: {
-          userProfile: true,
-          terrariums: true,
-        },
       });
       if (loginUser) {
+        const { username, passwordUser } = loginUser;
         return '';
       } else {
         throw new CustomError('NOT_FOUND', 'Credenciales Invalidas');

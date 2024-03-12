@@ -5,5 +5,6 @@ declare namespace NodeJS {
     USERDB: string;
     PASSWORD: string;
     DATABASE: string;
+    JWT_SECRET: string;
   }
 }

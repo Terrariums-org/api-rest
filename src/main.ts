@@ -19,6 +19,7 @@ import {
   UpdateTerrariumDto,
   UpdateTerrariumProfile,
 } from './terrariums/domain/dto';
+import { CreateLoginDTO } from './auth/domain/dto/create-login.dto';
 
 async function startServer() {
   const app = await NestFactory.create(AppModule);
@@ -50,6 +51,7 @@ async function startServer() {
       UpdateTerrariumDto,
       CreateTerrariumProfileDto,
       UpdateTerrariumProfile,
+      CreateLoginDTO,
     ],
   };
   const document = SwaggerModule.createDocument(app, config, configOptions);

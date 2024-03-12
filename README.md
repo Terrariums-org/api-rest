@@ -1,4 +1,5 @@
 ## Description
+
 If you want to start the project, create a new file called ".dev.env" with the following variables
 
 ```bash
@@ -12,6 +13,8 @@ $ USERDB = YOUR_DB_USERNAME
 $ PASSWORD = YOUR_DB_PASSWORD
 # database name
 $ DATABASE = YOUR_DB_NAME
+# secretword jwt
+$ JWT_SECRET = YOUR_JWT_SECRET
 ```
 
 ## Installation
