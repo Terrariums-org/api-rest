@@ -9,5 +9,6 @@ import { User } from './ports/mysql/user.entity';
   imports: [TypeOrmModule.forFeature([UserProfile, User])],
   controllers: [UsersController],
   providers: [UsersService],
+  exports : [UsersService]
 })
 export class UsersModule {}

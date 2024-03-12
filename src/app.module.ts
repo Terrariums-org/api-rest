@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './shared/config/domain/configEnv';
 import { TerrariumsModule } from './terrariums/terrariums.module';
+import { AuthModule } from './auth/infraestructure/auth.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { TerrariumsModule } from './terrariums/terrariums.module';
     }),
     UsersModule,
     TerrariumsModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
