@@ -1,9 +1,13 @@
-import { IsNotEmpty, IsNotEmptyObject, IsString, ValidateNested } from 'class-validator';
-import { CreateUserProfile } from './create-user_profile';
+import { IsInt, IsString, ValidateNested } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { UpdateUserProfile } from './update-user_profle';
+import { TerrariumsInterface } from 'src/terrariums/domain/entities';
 
 export class CreateUserDto {
-  @IsNotEmpty()
+  @IsInt()
+  @ApiProperty()
+  id: number;
+
   @IsString()
   @ApiProperty()
   username: string;
@@ -15,19 +19,12 @@ export class CreateUserDto {
   @IsString()
   @ApiProperty()
   email: string;
-  
+
   @ValidateNested()
   @ApiProperty()
-  userProfile: CreateUserProfile;
-  constructor(
-    username: string,
-    email: string,
-    password: string,
-    userProfile: CreateUserProfile,
-  ) {
-    this.username = username;
-    this.email = email;
-    this.passwordUser = password;
-    this.userProfile = userProfile;
-  }
+  userProfile: UpdateUserProfile;
+
+  @ValidateNested()
+  @ApiProperty()
+  terrariums: TerrariumsInterface[];
 }
