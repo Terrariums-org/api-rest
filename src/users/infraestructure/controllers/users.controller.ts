@@ -7,13 +7,16 @@ import {
   HttpCode,
   HttpStatus,
   ParseIntPipe,
+  Inject,
 } from '@nestjs/common';
 import { UsersService } from '../../application/users.service';
 import { UpdateUserDto } from '../../domain/dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    @Inject(UsersService) private readonly usersService: UsersService,
+  ) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)

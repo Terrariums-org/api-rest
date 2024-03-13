@@ -8,6 +8,7 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  Inject,
 } from '@nestjs/common';
 import { TerrariumsService } from 'src/terrariums/application/services/terrariums.service';
 import { CreateTerrariumDto } from 'src/terrariums/domain/dto';
@@ -15,7 +16,10 @@ import { UpdateTerrariumDto } from 'src/terrariums/domain/dto';
 
 @Controller('terrariums')
 export class TerrariumsController {
-  constructor(private readonly terrariumsService: TerrariumsService) {}
+  constructor(
+    @Inject(TerrariumsService)
+    private readonly terrariumsService: TerrariumsService,
+  ) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
