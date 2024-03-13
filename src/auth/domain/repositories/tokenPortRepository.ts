@@ -1,4 +1,8 @@
+import { PayloadInterface } from '../entities/payload.entity';
+
 export interface TokenPortRepository {
-  generateToken(userPayload: any, expiresIn: string): Promise<string>;
-  decodeToken(token: string): Promise<any>;
+  generateToken(
+    userPayload: PayloadInterface,
+  ): Promise<string>;
+  decodeToken(token: string): Promise<PayloadInterface>;
 }

@@ -23,7 +23,6 @@ import { CreateLoginDTO } from './auth/domain/dto/create-login.dto';
 
 async function startServer() {
   const app = await NestFactory.create(AppModule);
-
   const config = new DocumentBuilder()
     .setTitle('Nest example')
     .setDescription('The animalitos API description')
