@@ -6,7 +6,7 @@ import { CustomError } from 'src/shared/utils/Custom_error';
 import { User } from 'src/users/infraestructure/ports/mysql/user.entity';
 import { Repository } from 'typeorm';
 import { TokenService } from './token.service';
-import { log } from 'console';
+import { CreateUserDto } from 'src/users/domain/dto';
 
 @Injectable()
 export class AuthService implements AuthServiceRepository {
@@ -31,6 +31,29 @@ export class AuthService implements AuthServiceRepository {
       }
     } catch (err) {
       throw CustomError.createCustomError(err.message);
+    }
+  }
+  async registerService(user: CreateUserDto): Promise<string> {
+    try {
+      const existingUser = await this.userRepository.findOne({
+        where: {
+          email: user?.email,
+          username: user?.username,
+        },
+      });
+      if (!existingUser) {
+        //encriptar contraseña
+        const newUser = await this.userRepository.save(user);
+        const { id, username } = newUser;
+        const token = await this.tokenService.signToken({ id, username });
+        return token;
+      }
+      throw new CustomError(
+        'CONFLICT',
+        `usuario con email: ${user?.email} existente`,
+      );
+    } catch (error) {
+      throw CustomError.createCustomError(error.message);
     }
   }
 }
