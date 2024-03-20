@@ -15,6 +15,8 @@ $ PASSWORD = YOUR_DB_PASSWORD
 $ DATABASE = YOUR_DB_NAME
 # secretword jwt
 $ JWT_SECRET = YOUR_JWT_SECRET
+# your jumps for bcrypt
+$ BCRYPT_JUMPS = YOUR_BCRYPT_JUMPS
 ```
 
 ## Installation

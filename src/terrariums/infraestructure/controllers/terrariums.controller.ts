@@ -3,18 +3,20 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   HttpCode,
   HttpStatus,
   Inject,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from 'src/shared/config/application/guards/auth.guard';
 import { TerrariumsService } from 'src/terrariums/application/services/terrariums.service';
 import { CreateTerrariumDto } from 'src/terrariums/domain/dto';
 import { UpdateTerrariumDto } from 'src/terrariums/domain/dto';
 
 @Controller('terrariums')
+@UseGuards(AuthGuard)
 export class TerrariumsController {
   constructor(
     @Inject(TerrariumsService)

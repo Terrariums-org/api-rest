@@ -1,6 +1,6 @@
-import { PayloadInterface } from '../entities/payload.entity';
+import { DecodeTokenResInterface, PayloadInterface, TokenResponse } from '../entities';
 
 export interface TokenServiceRepository {
-  signToken(payload: PayloadInterface): Promise<string>;
-  decodeToken(token: string): Promise<PayloadInterface>;
+  signToken(payload: PayloadInterface): Promise<TokenResponse>;
+  decodeToken(token: string): Promise<DecodeTokenResInterface>;
 }

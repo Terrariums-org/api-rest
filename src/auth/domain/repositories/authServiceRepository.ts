@@ -1,7 +1,7 @@
 import { CreateUserDto } from "src/users/domain/dto";
-import { LoginInterface } from "../entities/login.entity";
+import { LoginInterface, TokenResponse } from "../entities";
 
 export interface AuthServiceRepository {
-    loginService(user: LoginInterface): Promise<string>;
-    registerService(user : CreateUserDto) : Promise<string>;
+    loginService(user: LoginInterface): Promise<TokenResponse>;
+    registerService(user : CreateUserDto) : Promise<TokenResponse>;
 }

@@ -2,12 +2,13 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateLoginDTO } from 'src/auth/domain/dto/create-login.dto';
 import { AuthServiceRepository } from 'src/auth/domain/repositories/authServiceRepository';
-import { CustomError } from 'src/shared/utils/Custom_error';
+import { CustomError } from 'src/shared/config/application/utils/Custom_error';
 import { User } from 'src/users/infraestructure/ports/mysql/user.entity';
 import { Repository } from 'typeorm';
 import { TokenService } from './token.service';
 import { CreateUserDto } from 'src/users/domain/dto';
 import { HashedPasswordService } from './hashedPassword.service';
+import { TokenResponse } from 'src/auth/domain/entities';
 
 @Injectable()
 export class AuthService implements AuthServiceRepository {
@@ -17,7 +18,7 @@ export class AuthService implements AuthServiceRepository {
     @Inject(HashedPasswordService)
     private readonly hashedPasswordService: HashedPasswordService,
   ) {}
-  async loginService(user: CreateLoginDTO): Promise<any> {
+  async loginService(user: CreateLoginDTO): Promise<TokenResponse> {
     try {
       const loginUser = await this.userRepository.findOne({
         where: {
@@ -43,7 +44,7 @@ export class AuthService implements AuthServiceRepository {
       throw CustomError.createCustomError(err.message);
     }
   }
-  async registerService(user: CreateUserDto): Promise<any> {
+  async registerService(user: CreateUserDto): Promise<TokenResponse> {
     try {
       const existingUser = await this.userRepository.findOne({
         where: {

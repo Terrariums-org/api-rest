@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { UpdateUserDto } from '../domain/dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../infraestructure/ports/mysql/user.entity';
@@ -6,7 +6,8 @@ import { Repository } from 'typeorm';
 import { UserServiceRepository } from '../domain/repositories/userServiceRepository';
 import { UserInterface } from '../domain/entities';
 import { UserProfile } from '../infraestructure/ports/mysql/user_profile.entity';
-import { CustomError } from 'src/shared/utils/Custom_error';
+import { CustomError } from 'src/shared/config/application/utils/';
+import { HashedPasswordService } from 'src/auth/aplication/services/hashedPassword.service';
 
 @Injectable()
 export class UsersService implements UserServiceRepository {
@@ -14,6 +15,8 @@ export class UsersService implements UserServiceRepository {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(UserProfile)
     private readonly userProfileRepository: Repository<UserProfile>,
+    @Inject(HashedPasswordService)
+    private readonly hashedPasswordService: HashedPasswordService,
   ) {}
 
   async updateService(user: UpdateUserDto): Promise<UserInterface> {
@@ -21,7 +24,14 @@ export class UsersService implements UserServiceRepository {
       if (!user.terrariums) {
         user.terrariums = [];
       }
-      return await this.userRepository.save(user);
+      const { passwordUser: passwordReq } = user;
+      const passwordHash =
+        await this.hashedPasswordService.encodePassword(passwordReq);
+      const newUser = {
+        ...user,
+        passwordUser: passwordHash,
+      };
+      return await this.userRepository.save(newUser);
     } catch (err) {
       throw CustomError.createCustomError(err.message);
     }
