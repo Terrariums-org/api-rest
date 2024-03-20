@@ -2,28 +2,39 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateLoginDTO } from 'src/auth/domain/dto/create-login.dto';
 import { AuthServiceRepository } from 'src/auth/domain/repositories/authServiceRepository';
-import { CustomError } from 'src/shared/utils/Custom_error';
+import { CustomError } from 'src/shared/config/application/utils/Custom_error';
 import { User } from 'src/users/infraestructure/ports/mysql/user.entity';
 import { Repository } from 'typeorm';
 import { TokenService } from './token.service';
 import { CreateUserDto } from 'src/users/domain/dto';
+import { HashedPasswordService } from './hashedPassword.service';
+import { TokenResponse } from 'src/auth/domain/entities';
 
 @Injectable()
 export class AuthService implements AuthServiceRepository {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @Inject(TokenService) private readonly tokenService: TokenService,
+    @Inject(HashedPasswordService)
+    private readonly hashedPasswordService: HashedPasswordService,
   ) {}
-  async loginService(user: CreateLoginDTO): Promise<string> {
+  async loginService(user: CreateLoginDTO): Promise<TokenResponse> {
     try {
       const loginUser = await this.userRepository.findOne({
         where: {
           email: user?.email,
-          passwordUser: user?.passwordUser,
         },
       });
       if (loginUser) {
-        const { username, id } = loginUser;
+        const { username, id, passwordUser: passwordOriginal } = loginUser;
+        const { passwordUser: passwordReq } = user;
+        const isValid = await this.hashedPasswordService.comparePassword(
+          passwordOriginal,
+          passwordReq,
+        );
+        if (!isValid) {
+          throw new CustomError('UNAUTHORIZED', 'Credenciales invalidas');
+        }
         const token = this.tokenService.signToken({ id, username });
         return token;
       } else {
@@ -33,7 +44,7 @@ export class AuthService implements AuthServiceRepository {
       throw CustomError.createCustomError(err.message);
     }
   }
-  async registerService(user: CreateUserDto): Promise<string> {
+  async registerService(user: CreateUserDto): Promise<TokenResponse> {
     try {
       const existingUser = await this.userRepository.findOne({
         where: {
@@ -42,9 +53,16 @@ export class AuthService implements AuthServiceRepository {
         },
       });
       if (!existingUser) {
+        const { passwordUser } = user;
         //encriptar contraseña
-        const newUser = await this.userRepository.save(user);
-        const { id, username } = newUser;
+        const passwordHashed =
+          await this.hashedPasswordService.encodePassword(passwordUser);
+        const newUser = {
+          ...user,
+          passwordUser: passwordHashed,
+        };
+        const userCreated = await this.userRepository.save(newUser);
+        const { id, username } = userCreated;
         const token = await this.tokenService.signToken({ id, username });
         return token;
       }

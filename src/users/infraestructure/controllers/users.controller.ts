@@ -8,11 +8,14 @@ import {
   HttpStatus,
   ParseIntPipe,
   Inject,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from '../../application/users.service';
 import { UpdateUserDto } from '../../domain/dto';
+import { AuthGuard } from 'src/shared/config/application/guards/auth.guard';
 
 @Controller('users')
+@UseGuards(AuthGuard)
 export class UsersController {
   constructor(
     @Inject(UsersService) private readonly usersService: UsersService,
