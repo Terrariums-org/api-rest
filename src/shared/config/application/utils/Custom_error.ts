@@ -7,7 +7,7 @@ export class CustomError extends Error {
     super(`${status} : ${message}`);
   }
 
-  public static createCustomError(message: string) {
+  public static createCustomError(message: string = '') {
     const statusName = message.split(' : ')[0];
     if (message !== '')
       throw new HttpException(message, HttpStatus[statusName]);

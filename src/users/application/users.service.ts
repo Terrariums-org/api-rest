@@ -33,6 +33,7 @@ export class UsersService implements UserServiceRepository {
       };
       return await this.userRepository.save(newUser);
     } catch (err) {
+      console.log(err);
       throw CustomError.createCustomError(err.message);
     }
   }
@@ -42,7 +43,9 @@ export class UsersService implements UserServiceRepository {
       const result =
         (await this.userRepository.delete(id)) &&
         (await this.userProfileRepository.delete(id));
-      if (!result.raw) throw new CustomError('NOT_FOUND', 'No affected user');
+      if (!result.raw) {
+        throw new CustomError('NOT_FOUND', 'No affected user');
+      }
     } catch (err) {
       CustomError.createCustomError(err.message);
     }
