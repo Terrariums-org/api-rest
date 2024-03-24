@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CustomError } from 'src/shared/config/application/utils';
-import { UpdateTerrariumDto } from 'src/terrariums/domain/dto';
-import { TerrariumsInterface } from 'src/terrariums/domain/entities';
+import { CustomError } from '../../../shared/config/application/utils';
+import { UpdateTerrariumDto } from '../../domain/dto';
+import { TerrariumsInterface } from '../../domain/entities';
 import {
   Terrariums,
   TerrariumsProfile,
-} from 'src/terrariums/infraestructure/ports/mysql';
+} from '../../infraestructure/ports/mysql';
 import { Repository } from 'typeorm';
 
 @Injectable()

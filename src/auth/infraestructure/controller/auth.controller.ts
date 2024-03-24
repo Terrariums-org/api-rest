@@ -6,9 +6,9 @@ import {
   Inject,
   Post,
 } from '@nestjs/common';
-import { AuthService } from 'src/auth/aplication/services/auth.service';
-import { CreateLoginDTO } from 'src/auth/domain/dto/create-login.dto';
-import { CreateUserDto } from 'src/users/domain/dto';
+import { AuthService } from '../../aplication/services/auth.service';
+import { CreateLoginDTO } from '../../domain/dto/create-login.dto';
+import { CreateUserDto } from '../../../users/domain/dto';
 
 @Controller('auth')
 export class AuthController {

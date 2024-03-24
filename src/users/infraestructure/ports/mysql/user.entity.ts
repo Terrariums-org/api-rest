@@ -6,9 +6,9 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { UserInterface } from 'src/users/domain/entities/user';
+import { UserInterface } from '../../../domain/entities/user';
 import { UserProfile } from './user_profile.entity';
-import { Terrariums } from 'src/terrariums/infraestructure/ports/mysql';
+import { Terrariums } from '../../../../terrariums/infraestructure/ports/mysql';
 
 @Entity({ name: 'users' })
 export class User implements UserInterface {

@@ -1,5 +1,5 @@
-import { HashedPasswordPortRepository } from 'src/auth/domain/repositories/hashedPasswordPortRepository';
-import { configService } from 'src/shared/config/domain/configEnv';
+import { HashedPasswordPortRepository } from '../../domain/repositories/hashedPasswordPortRepository';
+import { configService } from '../../../shared/config/domain/configEnv';
 import { hashSync, compareSync } from 'bcrypt';
 import { Injectable } from '@nestjs/common';
 

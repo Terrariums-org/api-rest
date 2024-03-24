@@ -1,4 +1,4 @@
-import { UserProfileInterface } from 'src/users/domain/entities/user_profile';
+import { UserProfileInterface } from '../../../domain/entities/user_profile';
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './user.entity';
 

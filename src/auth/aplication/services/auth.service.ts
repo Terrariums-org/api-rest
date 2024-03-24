@@ -1,14 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateLoginDTO } from 'src/auth/domain/dto/create-login.dto';
-import { AuthServiceRepository } from 'src/auth/domain/repositories/authServiceRepository';
-import { CustomError } from 'src/shared/config/application/utils/Custom_error';
-import { User } from 'src/users/infraestructure/ports/mysql/user.entity';
+import { CreateLoginDTO } from '../../domain/dto/create-login.dto';
+import { AuthServiceRepository } from '../../domain/repositories/authServiceRepository';
+import { CustomError } from '../../../shared/config/application/utils/Custom_error';
+import { User } from '../../../users/infraestructure/ports/mysql/user.entity';
 import { Repository } from 'typeorm';
 import { TokenService } from './token.service';
-import { CreateUserDto } from 'src/users/domain/dto';
+import { CreateUserDto } from '../../../users/domain/dto';
 import { HashedPasswordService } from './hashedPassword.service';
-import { TokenResponse } from 'src/auth/domain/entities';
+import { TokenResponse } from '../../domain/entities';
 
 @Injectable()
 export class AuthService implements AuthServiceRepository {

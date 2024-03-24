@@ -10,19 +10,19 @@ import {
   SwaggerDocumentOptions,
   SwaggerModule,
 } from '@nestjs/swagger';
-import { CreateLoginDTO } from 'src/auth/domain/dto/create-login.dto';
+import { CreateLoginDTO } from '../../../../auth/domain/dto/create-login.dto';
 import {
   CreateTerrariumDto,
   CreateTerrariumProfileDto,
   UpdateTerrariumDto,
   UpdateTerrariumProfile,
-} from 'src/terrariums/domain/dto';
+} from '../../../../terrariums/domain/dto';
 import {
   CreateUserDto,
   CreateUserProfile,
   UpdateUserDto,
   UpdateUserProfile,
-} from 'src/users/domain/dto';
+} from '../../../../users/domain/dto';
 
 export const setUp = (app: INestApplication) => {
   app.setGlobalPrefix('api');

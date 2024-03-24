@@ -7,7 +7,7 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { CreateTerrariumProfileDto } from './create-terrarium_profile.dto';
-import { CreateUserDto } from 'src/users/domain/dto';
+import { CreateUserDto } from '../../../users/domain/dto';
 
 export class CreateTerrariumDto {
   @IsInt()

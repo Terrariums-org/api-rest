@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { HashedPasswordServiceRepository } from 'src/auth/domain/repositories/hashedPasswordServiceRepository';
-import { BcryptRepositoryImp } from 'src/auth/infraestructure/ports/BcryptRepositoryImp.port';
+import { HashedPasswordServiceRepository } from '../../domain/repositories/hashedPasswordServiceRepository';
+import { BcryptRepositoryImp } from '../../infraestructure/ports/BcryptRepositoryImp.port';
 
 @Injectable()
 export class HashedPasswordService implements HashedPasswordServiceRepository {

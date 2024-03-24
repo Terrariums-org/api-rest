@@ -6,8 +6,8 @@ import { Repository } from 'typeorm';
 import { UserServiceRepository } from '../domain/repositories/userServiceRepository';
 import { UserInterface } from '../domain/entities';
 import { UserProfile } from '../infraestructure/ports/mysql/user_profile.entity';
-import { CustomError } from 'src/shared/config/application/utils/';
-import { HashedPasswordService } from 'src/auth/aplication/services/hashedPassword.service';
+import { CustomError } from '../../shared/config/application/utils/';
+import { HashedPasswordService } from '../../auth/aplication/services/hashedPassword.service';
 
 @Injectable()
 export class UsersService implements UserServiceRepository {

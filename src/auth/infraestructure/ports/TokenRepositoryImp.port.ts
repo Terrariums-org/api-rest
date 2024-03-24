@@ -1,5 +1,5 @@
-import { configService } from 'src/shared/config/domain/configEnv';
-import { TokenPortRepository } from 'src/auth/domain/repositories/tokenPortRepository';
+import { configService } from '../../../shared/config/domain/configEnv';
+import { TokenPortRepository } from '../../domain/repositories/tokenPortRepository';
 import { sign, decode } from 'jsonwebtoken';
 import { Injectable } from '@nestjs/common';
 

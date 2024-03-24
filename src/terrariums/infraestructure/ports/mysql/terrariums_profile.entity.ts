@@ -1,4 +1,4 @@
-import { TerrariumsProfileInterface } from 'src/terrariums/domain/entities';
+import { TerrariumsProfileInterface } from '../../../domain/entities';
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Terrariums } from './terrariums.entity';
 

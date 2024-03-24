@@ -1,5 +1,5 @@
-import { TerrariumsInterface } from 'src/terrariums/domain/entities';
-import { User } from 'src/users/infraestructure/ports/mysql/user.entity';
+import { TerrariumsInterface } from '../../../domain/entities';
+import { User } from '../../../../users/infraestructure/ports/mysql/user.entity';
 import {
   Column,
   Entity,

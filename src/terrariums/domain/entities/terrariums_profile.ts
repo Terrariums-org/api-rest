@@ -8,5 +8,5 @@ export interface TerrariumsProfileInterface {
   min_humidity: number;
   max_uv: number;
   min_uv: number;
-  terrarium: TerrariumsInterface;
+  terrarium?: TerrariumsInterface;
 }

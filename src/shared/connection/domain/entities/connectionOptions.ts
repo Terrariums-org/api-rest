@@ -1,4 +1,4 @@
-import { configService } from 'src/shared/config/domain/configEnv';
+import { configService } from '../../../config/domain/configEnv';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 export const connectionOptions: DataSourceOptions = {

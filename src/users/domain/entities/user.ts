@@ -1,5 +1,5 @@
 import { UserProfileInterface } from './user_profile';
-import { TerrariumsInterface } from 'src/terrariums/domain/entities';
+import { TerrariumsInterface } from '../../../terrariums/domain/entities';
 
 export interface UserInterface {
   readonly id: number;

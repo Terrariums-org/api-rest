@@ -8,7 +8,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { Decorators_KEYS } from '../../domain';
 import { Request } from 'express';
-import { TokenService } from 'src/auth/aplication/services/token.service';
+import { TokenService } from '../../../../auth/aplication/services/token.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
