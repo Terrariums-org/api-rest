@@ -45,7 +45,17 @@ export const setUp = (app: INestApplication) => {
     .setTitle('Nest example')
     .setDescription('The animalitos API description')
     .setVersion('1.0')
-    .addTag('animalitos')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Enter JWT token value, without key "Bearer"',
+        in: 'header',
+      },
+      'JWT-auth',
+    )
     .build();
   const configOptions: SwaggerDocumentOptions = {
     extraModels: [

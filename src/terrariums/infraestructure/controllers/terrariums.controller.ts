@@ -12,10 +12,13 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '../../../shared/config/application/guards/auth.guard';
 import { TerrariumsService } from '../../application/services/terrariums.service';
-import { CreateTerrariumDto, UpdateTerrariumDto } from '../../domain/dto';
+import { CreateTerrariumDto } from '../../domain/dto';
+import {  ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Terrariums')
 @Controller('terrariums')
 @UseGuards(AuthGuard)
+@ApiBearerAuth("JWT-auth")
 export class TerrariumsController {
   constructor(
     @Inject(TerrariumsService)

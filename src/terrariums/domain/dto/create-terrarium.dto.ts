@@ -2,15 +2,17 @@ import {
   IsInt,
   IsNotEmpty,
   IsNotEmptyObject,
+  IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { CreateTerrariumProfileDto } from './create-terrarium_profile.dto';
-import { CreateUserDto } from '../../../users/domain/dto';
+import {  UpdateUserDto } from '../../../users/domain/dto';
 
 export class CreateTerrariumDto {
   @IsInt()
+  @IsOptional()
   @ApiProperty()
   id: number;
 
@@ -27,5 +29,5 @@ export class CreateTerrariumDto {
   @ValidateNested()
   @ApiProperty()
   @IsNotEmptyObject()
-  user: CreateUserDto;
+  user: UpdateUserDto;
 }
