@@ -23,9 +23,11 @@ describe('Terrariums controller', () => {
       moduleRef.get<TerrariumsController>(TerrariumsController);
     terrariumToExperiment = terrariumsStub()[1];
   });
+
   it('Terrariums controller should be defined', () => {
     expect(terrariumsController).toBeDefined();
   });
+
   it('Should create a new terrarium', () => {
     expect(terrariumsController.create(terrariumToExperiment)).toEqual(
       terrariumToExperiment,
@@ -35,12 +37,14 @@ describe('Terrariums controller', () => {
     );
     expect(mockTerrariumsService.create).toHaveBeenCalledTimes(1);
   });
+
   it('should return an array of terrariums', async () => {
     const terrariumList = await terrariumsController.findAll();
     expect(terrariumList).toHaveLength(4);
     expect(terrariumList).toMatchObject<TerrariumsInterface[]>(terrariumList);
     expect(mockTerrariumsService.findAll).toHaveBeenCalledTimes(1);
   });
+
   describe('Find one terrarium', () => {
     it('Should return a terrarium', async () => {
       const terrariumResult = await terrariumsController.findOne(1);
@@ -54,6 +58,7 @@ describe('Terrariums controller', () => {
       expect(terrariumsController.findOne(-1)).toBeNull();
     });
   });
+  
   it('Should delete a user', () => {
     expect(terrariumsController.remove(1)).toEqual(
       'terrarium with id 1 deleted ',

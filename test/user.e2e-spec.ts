@@ -4,11 +4,11 @@ import * as request from 'supertest';
 import { User } from '../src/users/infraestructure/ports/mysql/user.entity';
 import { UsersModule } from '../src/users/infraestructure/users.module';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { mockUsersRepository } from '../src/users/tests/mocks/userRepository.mock';
+import { mockUsersRepository } from '../src/users/__tests__/mocks/userRepository.mock';
 import { UserProfile } from '../src/users/infraestructure/ports/mysql/user_profile.entity';
 import { AuthModule } from '../src/auth/infraestructure/auth.module';
 import { UserInterface } from '../src/users/domain/entities';
-import { userStub } from '../src/users/tests/stub/user.stub';
+import { userStub } from '../src/users/__tests__/stub/user.stub';
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;
