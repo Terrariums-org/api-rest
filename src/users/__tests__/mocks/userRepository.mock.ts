@@ -1,12 +1,10 @@
 import { UpdateUserDto } from '../../domain/dto';
 import { userStub } from '../stub/user.stub';
 
-const mockUsers = userStub();
-
 export const mockUsersRepository = {
   save: jest.fn().mockImplementation((userReq: UpdateUserDto) => {
     let newUser: UpdateUserDto;
-    mockUsers.forEach((user) => {
+    userStub().forEach((user) => {
       if (user.id === userReq.id) {
         user = {
           id: user.id,
@@ -28,7 +26,7 @@ export const mockUsersRepository = {
   }),
   delete: jest.fn().mockImplementation((id: number) => {
     let result = { raw: false };
-    mockUsers.forEach((user) => {
+    userStub().forEach((user) => {
       if (user.id === id) result = { raw: true };
     });
     return result;

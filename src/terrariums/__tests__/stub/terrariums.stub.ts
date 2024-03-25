@@ -1,6 +1,6 @@
-import { TerrariumsInterface } from '../../domain/entities';
+import { CreateTerrariumDto } from '../../domain/dto';
 
-export const TerrariumsStub = (): TerrariumsInterface[] => {
+export const terrariumsStub = (): CreateTerrariumDto[] => {
   return [
     {
       id: 1,

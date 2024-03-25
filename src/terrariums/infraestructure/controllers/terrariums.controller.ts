@@ -9,16 +9,17 @@ import {
   HttpStatus,
   Inject,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '../../../shared/config/application/guards/auth.guard';
 import { TerrariumsService } from '../../application/services/terrariums.service';
 import { CreateTerrariumDto } from '../../domain/dto';
-import {  ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Terrariums')
 @Controller('terrariums')
 @UseGuards(AuthGuard)
-@ApiBearerAuth("JWT-auth")
+@ApiBearerAuth('JWT-auth')
 export class TerrariumsController {
   constructor(
     @Inject(TerrariumsService)
@@ -39,13 +40,13 @@ export class TerrariumsController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  findOne(@Param('id') id: string) {
-    return this.terrariumsService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.terrariumsService.findOne(id);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  remove(@Param('id') id: string) {
-    return this.terrariumsService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.terrariumsService.remove(id);
   }
 }
