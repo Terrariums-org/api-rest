@@ -22,7 +22,7 @@ export class UsersController {
   ) {}
 
   @Patch()
-  @HttpCode(HttpStatus.CREATED)
+  @HttpCode(HttpStatus.OK)
   updateUser(@Body() updateUser: UpdateUserDto) {
     return this.usersService.updateService(updateUser);
   }
