@@ -25,7 +25,7 @@ export const mockUsersRepository = {
         newUser = user;
       }
     });
-    return newUser;
+    return newUser ?? userReq;
   }),
   delete: jest.fn().mockImplementation((id: number) => {
     let result = { raw: false };

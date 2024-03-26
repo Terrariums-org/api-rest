@@ -1,4 +1,10 @@
-import { IsEmail, IsInt, IsOptional, IsString, ValidateNested } from 'class-validator';
+import {
+  IsEmail,
+  IsInt,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { TerrariumsInterface } from '../../../terrariums/domain/entities';
 import { CreateUserProfile } from './create-user_profile';
@@ -7,7 +13,7 @@ export class CreateUserDto {
   @IsInt()
   @IsOptional()
   @ApiProperty()
-  id: number;
+  id?: number;
 
   @IsString()
   @ApiProperty()
@@ -27,6 +33,7 @@ export class CreateUserDto {
   userProfile: CreateUserProfile;
 
   @ValidateNested()
+  @IsOptional()
   @ApiProperty()
-  terrariums: TerrariumsInterface[];
+  terrariums?: TerrariumsInterface[];
 }

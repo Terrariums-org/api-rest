@@ -8,6 +8,8 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../../users/infraestructure/ports/mysql/user.entity';
 import { mockUsersRepository } from '../../users/__tests__/mocks/userRepository.mock';
 import { DecodeTokenResInterface, TokenResponse } from '../domain/entities';
+import { describe } from 'node:test';
+import { CreateUserDto } from 'src/users/domain/dto';
 
 describe('Auth service', () => {
   let authService: AuthService;
@@ -34,7 +36,7 @@ describe('Auth service', () => {
     );
   });
 
-  it('Auth service should be defined and the implementations that use', () => {
+  test('Auth service should be defined and the implementations that use', () => {
     expect(authService).toBeDefined();
     expect(tokenService).toBeDefined();
     expect(hashedPasswordService).toBeDefined();
@@ -80,6 +82,56 @@ describe('Auth service', () => {
           }),
         ).rejects.toThrow('UNAUTHORIZED');
         expect(mockUsersRepository.findOne).toHaveBeenCalledTimes(3);
+      });
+    });
+  });
+
+  describe('Register service', () => {
+    describe('The register service should be available to create a new user and return a valid token', () => {
+      let tokenResponse: TokenResponse;
+      it('Should create a new user and return a token', async () => {
+        const userReq: CreateUserDto = {
+          id: 4,
+          username: 'Fernando_Flores',
+          email: 'fernando@gmail.com',
+          passwordUser: 'password',
+          userProfile: {
+            id: 4,
+            name: 'Fernando',
+            last_name: 'Flores',
+          },
+        };
+        tokenResponse = await authService.registerService(userReq);
+        expect(tokenResponse).not.toBeNull();
+        expect(mockUsersRepository.findOne).toHaveBeenCalledTimes(4);
+      });
+      it('The token returned must be valid', async () => {
+        const decodeToken = await tokenService.decodeToken(tokenResponse.token);
+        expect(decodeToken).not.toBeNull();
+        expect(decodeToken).toStrictEqual<DecodeTokenResInterface>({
+          id: 4,
+          username: 'Fernando_Flores',
+          isExpired: false,
+        });
+      });
+    });
+    describe('The register service should not be available to create a new user and return a valid token', () => {
+      it('Should not create a new user and return a status "CONFLICT"', async () => {
+        const userReq: CreateUserDto = {
+          id: 4,
+          username: 'Fernando_Flores',
+          email: 'ana@example.com',
+          passwordUser: 'contraseña',
+          userProfile: {
+            id: 4,
+            name: 'Fernando',
+            last_name: 'Flores',
+          },
+        };
+        await expect(authService.registerService(userReq)).rejects.toThrow(
+          'CONFLICT',
+        );
+        expect(mockUsersRepository.findOne).toHaveBeenCalledTimes(5);
       });
     });
   });

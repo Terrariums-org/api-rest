@@ -5,7 +5,7 @@ export class CreateUserProfile {
   @IsInt()
   @IsOptional()
   @ApiProperty()
-  id: number;
+  id?: number;
 
   @IsString()
   @ApiProperty()
