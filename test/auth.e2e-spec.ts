@@ -97,7 +97,67 @@ describe('Auth controller (e2e)', () => {
       });
     });
     describe('/auth/register', () => {
-        
+      it('Should not register and get a "BAD_REQUEST" status for invalid data', () => {
+        return request(app.getHttpServer())
+          .post('/auth/register')
+          .set('Content-Type', 'application/json')
+          .send({
+            username: 'Fernando',
+            email: '',
+            userProfile: {},
+          })
+          .expect(HttpStatus.BAD_REQUEST)
+          .then((res) =>
+            expect(res.body).toStrictEqual({
+              message: [
+                'passwordUser should not be empty',
+                'passwordUser must be a string',
+                'email must be an email',
+                'email should not be empty',
+                'userProfile must be a non-empty object',
+              ],
+              error: 'Bad Request',
+              statusCode: 400,
+            }),
+          );
+      });
+
+      it('Should not register and get a "CONFLICT" status for existing user', () => {
+        return request(app.getHttpServer())
+          .post('/auth/register')
+          .set('Content-Type', 'application/json')
+          .send({
+            username: 'Fernando',
+            passwordUser: 'contraseña',
+            email: 'ana@example.com',
+            userProfile: { name: 'Ana', last_name: 'Martínez' },
+          })
+          .expect(HttpStatus.CONFLICT)
+          .then((res) =>
+            expect(res.body).toStrictEqual({
+              statusCode: 409,
+              message:
+                'CONFLICT : usuario con email: ana@example.com existente',
+            }),
+          );
+      });
+
+      it('should register and return a token', () => {
+        return request(app.getHttpServer())
+          .post('/auth/register')
+          .set('Content-Type', 'application/json')
+          .send({
+            username: 'Fernando',
+            passwordUser: 'contraseña',
+            email: 'fernando@example.com',
+            userProfile: { name: 'Fernando', last_name: 'Flores' },
+          })
+          .expect(HttpStatus.CREATED)
+          .then((res) => {
+            expect(res.body).not.toBeNull();
+            expect(res.body).toMatchObject<TokenResponse>(res.body);
+          });
+      });
     });
   });
 });

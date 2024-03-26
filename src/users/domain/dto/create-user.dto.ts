@@ -2,6 +2,7 @@ import {
   IsEmail,
   IsInt,
   IsNotEmpty,
+  IsNotEmptyObject,
   IsOptional,
   IsString,
   ValidateNested,
@@ -33,6 +34,8 @@ export class CreateUserDto {
   email: string;
 
   @ValidateNested()
+  @IsNotEmpty()
+  @IsNotEmptyObject()
   @ApiProperty()
   userProfile: CreateUserProfile;
 
