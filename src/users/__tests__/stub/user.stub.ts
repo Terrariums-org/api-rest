@@ -6,7 +6,8 @@ export const userStub = (): UserInterface[] => {
       id: 1,
       email: 'juan@example.com',
       username: 'juanperez',
-      passwordUser: 'contraseña',
+      passwordUser:
+        '$2b$10$.ITQwExDexLNa9/ZHy2IauMeqq0zUQu8Mx4A4gN7UpxPgCNPU7wjO', //el valor decodificado es 'contraseña'
       userProfile: {
         id: 1,
         name: 'Juan',
@@ -32,7 +33,8 @@ export const userStub = (): UserInterface[] => {
       id: 2,
       email: 'ana@example.com',
       username: 'anamartinez',
-      passwordUser: 'contraseña',
+      passwordUser:
+        '$2b$10$.ITQwExDexLNa9/ZHy2IauMeqq0zUQu8Mx4A4gN7UpxPgCNPU7wjO', //el valor decodificado es 'contraseña'
       userProfile: {
         id: 2,
         name: 'Ana',
@@ -58,7 +60,8 @@ export const userStub = (): UserInterface[] => {
       id: 3,
       email: 'pedro@example.com',
       username: 'pedrogonzalez',
-      passwordUser: 'contraseña',
+      passwordUser:
+        '$2b$10$.ITQwExDexLNa9/ZHy2IauMeqq0zUQu8Mx4A4gN7UpxPgCNPU7wjO', //el valor decodificado es 'contraseña'
       userProfile: {
         id: 3,
         name: 'Pedro',

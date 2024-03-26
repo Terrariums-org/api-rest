@@ -1,5 +1,8 @@
+import { FindOneOptions } from 'typeorm';
 import { UpdateUserDto } from '../../domain/dto';
 import { userStub } from '../stub/user.stub';
+import { User } from '../../infraestructure/ports/mysql/user.entity';
+import { UserInterface } from '../../domain/entities';
 
 export const mockUsersRepository = {
   save: jest.fn().mockImplementation((userReq: UpdateUserDto) => {
@@ -31,4 +34,12 @@ export const mockUsersRepository = {
     });
     return result;
   }),
+  findOne: jest
+    .fn()
+    .mockImplementation((options: FindOneOptions<User>): UserInterface => {
+      const { email } = options.where as {
+        email: string;
+      };
+      return userStub().filter((user) => user.email === email)[0] ?? null;
+    }),
 };

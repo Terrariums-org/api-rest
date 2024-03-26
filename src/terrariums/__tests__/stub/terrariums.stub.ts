@@ -8,7 +8,8 @@ export const terrariumsStub = (): CreateTerrariumDto[] => {
       user: {
         id: 1,
         email: 'juan@example.com',
-        passwordUser: 'contraseña',
+        passwordUser:
+          '$2b$10$.ITQwExDexLNa9/ZHy2IauMeqq0zUQu8Mx4A4gN7UpxPgCNPU7wjO', //el valor decodificado es 'contraseña'
         username: 'juanperez',
       },
       terrariumProfile: {
@@ -28,7 +29,8 @@ export const terrariumsStub = (): CreateTerrariumDto[] => {
         id: 2,
         email: 'ana@example.com',
         username: 'anamartinez',
-        passwordUser: 'contraseña',
+        passwordUser:
+          '$2b$10$.ITQwExDexLNa9/ZHy2IauMeqq0zUQu8Mx4A4gN7UpxPgCNPU7wjO', //el valor decodificado es 'contraseña'
       },
       terrariumProfile: {
         id: 2,
@@ -47,7 +49,8 @@ export const terrariumsStub = (): CreateTerrariumDto[] => {
         id: 3,
         email: 'pedro@example.com',
         username: 'pedrogonzalez',
-        passwordUser: 'contraseña',
+        passwordUser:
+          '$2b$10$.ITQwExDexLNa9/ZHy2IauMeqq0zUQu8Mx4A4gN7UpxPgCNPU7wjO', //el valor decodificado es 'contraseña'
       },
       terrariumProfile: {
         id: 3,
@@ -66,7 +69,8 @@ export const terrariumsStub = (): CreateTerrariumDto[] => {
         id: 3,
         email: 'pedro@example.com',
         username: 'pedrogonzalez',
-        passwordUser: 'contraseña',
+        passwordUser:
+          '$2b$10$.ITQwExDexLNa9/ZHy2IauMeqq0zUQu8Mx4A4gN7UpxPgCNPU7wjO', //el valor decodificado es 'contraseña'
       },
       terrariumProfile: {
         id: 4,
