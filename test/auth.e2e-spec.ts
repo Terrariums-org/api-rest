@@ -6,6 +6,7 @@ import { AuthModule } from '../src/auth/infraestructure/auth.module';
 import { mockUsersRepository } from '../src/users/__tests__/mocks/userRepository.mock';
 import { User } from '../src/users/infraestructure/ports/mysql/user.entity';
 import { UserProfile } from '../src/users/infraestructure/ports/mysql/user_profile.entity';
+import { TokenResponse } from 'src/auth/domain/entities';
 
 describe('Auth controller (e2e)', () => {
   let app: INestApplication;
@@ -79,6 +80,24 @@ describe('Auth controller (e2e)', () => {
             }),
           );
       });
+
+      it('should login and return a token', () => {
+        return request(app.getHttpServer())
+          .post('/auth/login')
+          .set('Content-Type', 'application/json')
+          .send({
+            email: 'ana@example.com',
+            passwordUser: 'contraseña',
+          })
+          .expect(HttpStatus.ACCEPTED)
+          .then((res) => {
+            expect(res.body).not.toBeNull();
+            expect(res.body).toMatchObject<TokenResponse>(res.body);
+          });
+      });
+    });
+    describe('/auth/register', () => {
+        
     });
   });
 });
