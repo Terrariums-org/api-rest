@@ -24,7 +24,7 @@ describe('Auth controller (e2e)', () => {
     await app.init();
   });
 
-  describe('POST /', () => {
+  describe('POST /auth', () => {
     describe('/auth/login', () => {
       it('Should not login and get a "BAD_REQUEST" status for empty data', () => {
         return request(app.getHttpServer())

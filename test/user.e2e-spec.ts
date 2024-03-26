@@ -17,7 +17,7 @@ describe('UserController (e2e)', () => {
   let userToExperiment: UserInterface;
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [UsersModule, AuthModule]
+      imports: [UsersModule, AuthModule],
     })
       .overrideProvider(getRepositoryToken(UserProfile))
       .useValue(mockUsersRepository)
@@ -44,7 +44,7 @@ describe('UserController (e2e)', () => {
       });
   });
 
-  describe('DELETE /', () => {
+  describe('DELETE /users/:id', () => {
     it('Should not delete and get a status 401', () => {
       return request(app.getHttpServer())
         .delete('/users/1')
@@ -74,7 +74,7 @@ describe('UserController (e2e)', () => {
     });
   });
 
-  describe('PATCH /', () => {
+  describe('PATCH /users', () => {
     it('Should not update and get a status 401', () => {
       return request(app.getHttpServer())
         .patch('/users')
