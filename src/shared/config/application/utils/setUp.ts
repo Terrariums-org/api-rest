@@ -34,11 +34,7 @@ export const setUp = (app: INestApplication) => {
   app.get(ConfigService);
   //pipes from dtos
   app.useGlobalPipes(
-    new ValidationPipe({
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
-    }),
+    new ValidationPipe(),
   );
   //swagger
   const config = new DocumentBuilder()

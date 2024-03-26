@@ -1,6 +1,7 @@
 import {
   IsEmail,
   IsInt,
+  IsNotEmpty,
   IsOptional,
   IsString,
   ValidateNested,
@@ -16,14 +17,17 @@ export class CreateUserDto {
   id?: number;
 
   @IsString()
+  @IsNotEmpty()
   @ApiProperty()
   username: string;
 
   @IsString()
+  @IsNotEmpty()
   @ApiProperty()
   passwordUser: string;
 
   @IsString()
+  @IsNotEmpty()
   @ApiProperty()
   @IsEmail()
   email: string;

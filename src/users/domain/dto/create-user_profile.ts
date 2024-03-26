@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsOptional, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateUserProfile {
   @IsInt()
@@ -8,6 +8,7 @@ export class CreateUserProfile {
   id?: number;
 
   @IsString()
+  @IsNotEmpty()
   @ApiProperty()
   name: string;
 
