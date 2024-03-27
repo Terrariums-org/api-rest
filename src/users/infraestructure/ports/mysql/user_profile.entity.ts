@@ -9,7 +9,7 @@ export class UserProfile implements UserProfileInterface {
   @Column({ nullable: false, length: 60 })
   readonly name: string;
   @Column({ nullable: true, length: 60 })
-  last_name: string;
+  readonly last_name: string;
   @OneToOne(() => User, (user) => user.userProfile)
-  user: User;
+  readonly user: User;
 }

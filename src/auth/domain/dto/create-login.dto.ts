@@ -7,9 +7,9 @@ export class CreateLoginDTO implements LoginInterface {
   @IsEmail()
   @IsNotEmpty()
   @ApiProperty()
-  email: string;
+    email: string;
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  passwordUser: string;
+    passwordUser: string;
 }

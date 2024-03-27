@@ -5,29 +5,29 @@ export class CreateTerrariumProfileDto {
   @IsInt()
   @IsOptional()
   @ApiProperty()
-  id: number;
+    id: number;
 
   @IsNumber({ allowInfinity: false, allowNaN: false, maxDecimalPlaces: 5 })
   @ApiProperty()
-  max_temp: number;
+    max_temp: number;
 
   @IsNumber({ allowInfinity: false, allowNaN: false, maxDecimalPlaces: 5 })
   @ApiProperty()
-  min_temp: number;
+    min_temp: number;
 
   @IsNumber({ allowInfinity: false, allowNaN: false, maxDecimalPlaces: 5 })
   @ApiProperty()
-  max_humidity: number;
+    max_humidity: number;
 
   @IsNumber({ allowInfinity: false, allowNaN: false, maxDecimalPlaces: 5 })
   @ApiProperty()
-  min_humidity: number;
+    min_humidity: number;
 
   @IsNumber({ allowInfinity: false, allowNaN: false, maxDecimalPlaces: 5 })
   @ApiProperty()
-  max_uv: number;
+    max_uv: number;
 
   @IsNumber({ allowInfinity: false, allowNaN: false, maxDecimalPlaces: 5 })
   @ApiProperty()
-  min_uv: number;
+    min_uv: number;
 }

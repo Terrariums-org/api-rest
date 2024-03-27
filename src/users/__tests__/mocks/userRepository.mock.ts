@@ -30,7 +30,9 @@ export const mockUsersRepository = {
   delete: jest.fn().mockImplementation((id: number) => {
     let result = { raw: false };
     userStub().forEach((user) => {
-      if (user.id === id) result = { raw: true };
+      if (user.id === id) {
+        result = { raw: true };
+      }
     });
     return result;
   }),

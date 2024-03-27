@@ -5,16 +5,16 @@ export class CreateUserProfile {
   @IsInt()
   @IsOptional()
   @ApiProperty()
-  id?: number;
+    id?: number;
 
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  name: string;
+    name: string;
 
   @IsString()
   @ApiProperty()
-  last_name: string;
+    last_name: string;
   constructor(name: string, last_name: string) {
     this.name = name;
     this.last_name = last_name;

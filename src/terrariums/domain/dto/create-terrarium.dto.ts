@@ -14,20 +14,20 @@ export class CreateTerrariumDto {
   @IsInt()
   @IsOptional()
   @ApiProperty()
-  id: number;
+    id: number;
 
   @IsString()
   @ApiProperty()
   @IsNotEmpty()
-  name: string;
+    name: string;
 
   @ValidateNested()
   @ApiProperty()
   @IsNotEmptyObject()
-  terrariumProfile: CreateTerrariumProfileDto;
+    terrariumProfile: CreateTerrariumProfileDto;
 
   @ValidateNested()
   @ApiProperty()
   @IsNotEmptyObject()
-  user: UpdateUserDto;
+    user: UpdateUserDto;
 }

@@ -44,7 +44,7 @@ describe('Terrariums service', () => {
       );
       expect(mockTerrariumsRepository.findOne).toHaveBeenCalledTimes(1);
     });
-    it("Should return a 'NOT_FOUND' error", async () => {
+    it('Should return a \'NOT_FOUND\' error', async () => {
       await expect(terrariumsService.findOne(0)).rejects.toThrow('NOT_FOUND');
     });
   });

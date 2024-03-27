@@ -36,8 +36,9 @@ export class TerrariumsService {
           terrariumProfile: true,
         },
       });
-      if (!terrariums.length)
+      if (!terrariums.length) {
         throw new CustomError('NO_CONTENT', 'No hay terrarios registrados');
+      }
       return terrariums;
     } catch (error) {
       throw CustomError.createCustomError(error.message);
@@ -55,8 +56,9 @@ export class TerrariumsService {
           terrariumProfile: true,
         },
       });
-      if (!terrarium)
+      if (!terrarium) {
         throw new CustomError('NOT_FOUND', 'Terrario no encontrado');
+      }
       return terrarium;
     } catch (error) {
       throw CustomError.createCustomError(error.message);
@@ -68,8 +70,9 @@ export class TerrariumsService {
       const result =
         (await this.terrariumsRepository.delete(id)) &&
         (await this.terrariumsProfileRepository.delete(id));
-      if (!result.raw)
+      if (!result.raw) {
         throw new CustomError('NOT_FOUND', 'Terrario no encontrado');
+      }
     } catch (error) {
       throw CustomError.createCustomError(error.message);
     }

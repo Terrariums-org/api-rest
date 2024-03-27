@@ -5,19 +5,19 @@ import { Terrariums } from './terrariums.entity';
 @Entity({ name: 'terrariums_profile' })
 export class TerrariumsProfile implements TerrariumsProfileInterface {
   @PrimaryGeneratedColumn()
-  id: number;
+    id: number;
   @Column({ type: 'float' })
-  max_temp: number;
+    max_temp: number;
   @Column({ type: 'float' })
-  min_temp: number;
+    min_temp: number;
   @Column({ type: 'float' })
-  max_humidity: number;
+    max_humidity: number;
   @Column({ type: 'float' })
-  min_humidity: number;
+    min_humidity: number;
   @Column({ type: 'float' })
-  max_uv: number;
+    max_uv: number;
   @Column({ type: 'float' })
-  min_uv: number;
+    min_uv: number;
   @OneToOne(() => Terrariums, (terrarium) => terrarium.terrariumProfile)
-  terrarium: Terrariums;
+    terrarium: Terrariums;
 }

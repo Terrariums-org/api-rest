@@ -157,12 +157,11 @@ describe('Terrariums controller (e2e)', () => {
           },
         })
         .expect(HttpStatus.BAD_REQUEST)
-        .then((res) => console.log(res.body))
-        // {
-        //     message: [ 'terrariumProfile must be a non-empty object' ],
-        //     error: 'Bad Request',
-        //     statusCode: 400
-        //   });
+        .then((res) => console.log(res.body));
+      // {
+      //     message: [ 'terrariumProfile must be a non-empty object' ],
+      //     error: 'Bad Request',
+      //     statusCode: 400        //   });
     });
   });
 });

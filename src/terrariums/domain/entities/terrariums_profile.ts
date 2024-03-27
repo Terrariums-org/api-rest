@@ -1,4 +1,4 @@
-import { TerrariumsInterface } from "./terrariums";
+import { TerrariumsInterface } from './terrariums';
 
 export interface TerrariumsProfileInterface {
   id: number;

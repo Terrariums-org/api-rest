@@ -15,32 +15,32 @@ export class CreateUserDto {
   @IsInt()
   @IsOptional()
   @ApiProperty()
-  id?: number;
+    id?: number;
 
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  username: string;
+    username: string;
 
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  passwordUser: string;
+    passwordUser: string;
 
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
   @IsEmail()
-  email: string;
+    email: string;
 
   @ValidateNested()
   @IsNotEmpty()
   @IsNotEmptyObject()
   @ApiProperty()
-  userProfile: CreateUserProfile;
+    userProfile: CreateUserProfile;
 
   @ValidateNested()
   @IsOptional()
   @ApiProperty()
-  terrariums?: TerrariumsInterface[];
+    terrariums?: TerrariumsInterface[];
 }

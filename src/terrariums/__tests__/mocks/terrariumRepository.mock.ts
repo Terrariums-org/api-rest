@@ -1,9 +1,9 @@
-import { FindManyOptions, FindOneOptions } from 'typeorm';
+import { FindOneOptions } from 'typeorm';
 import { terrariumsStub } from '../stub/terrariums.stub';
 import { Terrariums } from '../../infraestructure/ports/mysql';
 
 export const mockTerrariumsRepository = {
-  find: jest.fn().mockImplementation((options: FindManyOptions<Terrariums>) => {
+  find: jest.fn().mockImplementation(() => {
     return terrariumsStub();
   }),
   findOne: jest
@@ -17,7 +17,9 @@ export const mockTerrariumsRepository = {
   delete: jest.fn().mockImplementation((id: number) => {
     let result = { raw: false };
     terrariumsStub().forEach((terrarium) => {
-      if (terrarium.id === id) result = { raw: true };
+      if (terrarium.id === id) {
+        result = { raw: true };
+      }
     });
     return result;
   }),

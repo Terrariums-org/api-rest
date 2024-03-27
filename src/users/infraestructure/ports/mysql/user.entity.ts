@@ -19,10 +19,10 @@ export class User implements UserInterface {
   @Column({ unique: true, nullable: false, length: 45 })
   readonly username: string;
   @Column({ nullable: false })
-  passwordUser: string;
+  readonly passwordUser: string;
   @OneToOne(() => UserProfile, (user) => user.user, { cascade: true })
   @JoinColumn({ name: 'id_user_profile' })
-  userProfile: UserProfile;
+  readonly userProfile: UserProfile;
   @OneToMany(() => Terrariums, (terrariums) => terrariums.user)
-  terrariums: Terrariums[];
+  readonly terrariums: Terrariums[];
 }

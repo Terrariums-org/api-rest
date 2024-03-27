@@ -1,4 +1,4 @@
-import { TerrariumsInterface } from "../entities";
+import { TerrariumsInterface } from '../entities';
 
 export interface TerrariumPortRepository {
     findAll() : Promise<TerrariumsInterface[]>
