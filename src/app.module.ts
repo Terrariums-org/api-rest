@@ -9,7 +9,7 @@ import { AuthModule } from './auth/infraestructure/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.dev.env',
+      envFilePath: ['.dev.env', '.production.env'],
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({
