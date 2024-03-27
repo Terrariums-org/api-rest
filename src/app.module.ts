@@ -1,22 +1,22 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from './users/infraestructure/users.module';
 import { ConfigModule } from '@nestjs/config';
-import { TerrariumsModule } from './terrariums/terrariums.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { connectionOptions } from './shared/connection/domain/entities/connectionOptions';
 import { configService } from './shared/config/domain/configEnv';
+import { TerrariumsModule } from './terrariums/infraestructure/terrariums.module';
+import { AuthModule } from './auth/infraestructure/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `.${process.env.NODE_ENV}.env`,
+      envFilePath: ['.dev.env', '.production.env'],
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: configService.get('HOST'),
       port: configService.get('PORT'),
-      username: configService.get('USER'),
+      username: configService.get('USERDB'),
       password: configService.get('PASSWORD'),
       database: configService.get('DATABASE'),
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
@@ -24,6 +24,7 @@ import { configService } from './shared/config/domain/configEnv';
     }),
     UsersModule,
     TerrariumsModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

@@ -1,9 +1,9 @@
 import { TerrariumsProfileInterface } from './terrariums_profile';
-import { UserInterface } from 'src/users/domain/entities';
+import { UpdateUserDto } from 'src/users/domain/dto';
 
 export interface TerrariumsInterface {
   id: number;
   name: string;
-  id_user: UserInterface;
-  id_terrarium_profile: TerrariumsProfileInterface;
+  user?: UpdateUserDto;
+  terrariumProfile: TerrariumsProfileInterface;
 }
