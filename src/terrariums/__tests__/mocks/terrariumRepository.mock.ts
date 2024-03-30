@@ -1,6 +1,7 @@
 import { FindOneOptions } from 'typeorm';
 import { terrariumsStub } from '../stub/terrariums.stub';
 import { Terrariums } from '../../infraestructure/ports/mysql';
+import { CreateTerrariumDto } from 'src/terrariums/domain/dto';
 
 export const mockTerrariumsRepository = {
   find: jest.fn().mockImplementation(() => {
@@ -23,4 +24,7 @@ export const mockTerrariumsRepository = {
     });
     return result;
   }),
+  save: jest
+    .fn()
+    .mockImplementation((terrariumReq: CreateTerrariumDto) => terrariumReq),
 };

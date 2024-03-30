@@ -13,6 +13,7 @@ import { CreateLoginDTO } from '../src/auth/domain/dto/create-login.dto';
 import { User, UserProfile } from '../src/users/infraestructure/ports/mysql';
 import { mockUsersRepository } from '../src/users/__tests__/mocks/userRepository.mock';
 import { TerrariumsInterface } from '../src/terrariums/domain/entities';
+import { CreateTerrariumDto } from 'src/terrariums/domain/dto';
 
 describe('Terrariums controller (e2e)', () => {
   let app: INestApplication;
@@ -149,7 +150,7 @@ describe('Terrariums controller (e2e)', () => {
         .set('Content-Type', 'application/json')
         .set('authorization', `Bearer ${token}`)
         .send({
-          id: 4,
+          id: 10,
           name: 'Terrario',
           terrariumProfile: {},
           user: {
@@ -157,11 +158,41 @@ describe('Terrariums controller (e2e)', () => {
           },
         })
         .expect(HttpStatus.BAD_REQUEST)
-        .then((res) => console.log(res.body));
-      // {
-      //     message: [ 'terrariumProfile must be a non-empty object' ],
-      //     error: 'Bad Request',
-      //     statusCode: 400        //   });
+        .then((res) => {
+          expect(res.body).toStrictEqual({
+            message: ['terrariumProfile must be a non-empty object'],
+            error: 'Bad Request',
+            statusCode: 400,
+          });
+        });
+    });
+    it('Should create a new Terrarium and return a status 201', () => {
+      const terrariumReq: CreateTerrariumDto = {
+        id: 5,
+        name: 'Terrario',
+        terrariumProfile: {
+          id: 5,
+          max_temp: 40,
+          min_temp: 5,
+          max_humidity: 50,
+          min_humidity: 30,
+          max_uv: 50,
+          min_uv: 25,
+        },
+        user: {
+          id: 1,
+        },
+      };
+      return request(app.getHttpServer())
+        .post('/terrariums')
+        .set('Content-Type', 'application/json')
+        .set('authorization', `Bearer ${token}`)
+        .send(terrariumReq)
+        .expect(HttpStatus.CREATED)
+        .then((res) => {
+          expect(res.body).not.toBeNull();
+          expect(res.body).toMatchObject<CreateTerrariumDto>(terrariumReq);
+        });
     });
   });
 });
