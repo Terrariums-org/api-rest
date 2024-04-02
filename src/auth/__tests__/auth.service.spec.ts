@@ -8,7 +8,6 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../../users/infraestructure/ports/mysql/user.entity';
 import { mockUsersRepository } from '../../users/__tests__/mocks/userRepository.mock';
 import { DecodeTokenResInterface, TokenResponse } from '../domain/entities';
-import { describe } from 'node:test';
 import { CreateUserDto } from 'src/users/domain/dto';
 
 describe('Auth service', () => {
