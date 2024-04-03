@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CustomError } from '../../../shared/config/application/utils';
 import { UpdateTerrariumDto } from '../../domain/dto';
@@ -8,6 +8,8 @@ import {
   TerrariumsProfile,
 } from '../../infraestructure/ports/mysql';
 import { Repository } from 'typeorm';
+import { QueueServiceRepositoryImp } from '../../../shared/connection/broker/application/services/queue.service.';
+import { ExchangeName } from '../../../shared/connection/broker/domain/entities/ExchangeName';
 
 @Injectable()
 export class TerrariumsService {
@@ -16,13 +18,22 @@ export class TerrariumsService {
     private readonly terrariumsRepository: Repository<Terrariums>,
     @InjectRepository(TerrariumsProfile)
     private readonly terrariumsProfileRepository: Repository<TerrariumsProfile>,
+    @Inject(QueueServiceRepositoryImp)
+    private readonly queueServiceRepository: QueueServiceRepositoryImp,
   ) {}
 
   async create(
     createTerrariumDto: UpdateTerrariumDto,
   ): Promise<TerrariumsInterface> {
     try {
-      return await this.terrariumsRepository.save(createTerrariumDto);
+      const terrarium =
+        await this.terrariumsRepository.save(createTerrariumDto);
+      await this.queueServiceRepository.sendMessage(
+        terrarium,
+        ExchangeName,
+        'info',
+      );
+      return terrarium;
     } catch (error) {
       throw CustomError.createCustomError('INTERNAL_SERVER_ERROR');
     }

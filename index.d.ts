@@ -7,6 +7,7 @@ declare namespace NodeJS {
     DATABASE: string;
     JWT_SECRET: string;
     BCRYPT_JUMPS: number;
+    BROKER_HOST : string;
   }
 }
 
