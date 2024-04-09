@@ -9,6 +9,7 @@ import {
   HttpStatus,
   Inject,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { AuthGuard } from 'src/shared/config/application/guards/auth.guard';
 import { TerrariumsService } from 'src/terrariums/application/services/terrariums.service';
@@ -16,8 +17,10 @@ import { CreateTerrariumDto } from 'src/terrariums/domain/dto';
 import { UpdateTerrariumDto } from 'src/terrariums/domain/dto';
 import { CreateUserDto } from 'src/users/domain/dto';
 
+@ApiTags('Terrariums')
 @Controller('terrariums')
 @UseGuards(AuthGuard)
+@ApiBearerAuth('JWT-auth')
 export class TerrariumsController {
   constructor(
     @Inject(TerrariumsService)
@@ -44,7 +47,7 @@ export class TerrariumsController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  remove(@Param('id') id: string) {
-    return this.terrariumsService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.terrariumsService.remove(id);
   }
 }

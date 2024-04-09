@@ -3,13 +3,13 @@ import { UsersModule } from './users/infraestructure/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './shared/config/domain/configEnv';
-import { TerrariumsModule } from './terrariums/terrariums.module';
+import { TerrariumsModule } from './terrariums/infraestructure/terrariums.module';
 import { AuthModule } from './auth/infraestructure/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `.dev.env`,
+      envFilePath: ['.dev.env', '.production.env'],
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({

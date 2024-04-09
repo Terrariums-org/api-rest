@@ -10,19 +10,19 @@ import {
   SwaggerDocumentOptions,
   SwaggerModule,
 } from '@nestjs/swagger';
-import { CreateLoginDTO } from 'src/auth/domain/dto/create-login.dto';
+import { CreateLoginDTO } from '../../../../auth/domain/dto/create-login.dto';
 import {
   CreateTerrariumDto,
   CreateTerrariumProfileDto,
   UpdateTerrariumDto,
   UpdateTerrariumProfile,
-} from 'src/terrariums/domain/dto';
+} from '../../../../terrariums/domain/dto';
 import {
   CreateUserDto,
   CreateUserProfile,
   UpdateUserDto,
   UpdateUserProfile,
-} from 'src/users/domain/dto';
+} from '../../../../users/domain/dto';
 
 export const setUp = (app: INestApplication) => {
   app.setGlobalPrefix('api');
@@ -34,18 +34,24 @@ export const setUp = (app: INestApplication) => {
   app.get(ConfigService);
   //pipes from dtos
   app.useGlobalPipes(
-    new ValidationPipe({
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
-    }),
+    new ValidationPipe(),
   );
   //swagger
   const config = new DocumentBuilder()
     .setTitle('Nest example')
     .setDescription('The animalitos API description')
     .setVersion('1.0')
-    .addTag('animalitos')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Enter JWT token value, without key "Bearer"',
+        in: 'header',
+      },
+      'JWT-auth',
+    )
     .build();
   const configOptions: SwaggerDocumentOptions = {
     extraModels: [

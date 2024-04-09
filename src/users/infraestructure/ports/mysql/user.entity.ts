@@ -6,9 +6,9 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { UserInterface } from 'src/users/domain/entities/user';
+import { UserInterface } from '../../../domain/entities/user';
 import { UserProfile } from './user_profile.entity';
-import { Terrariums } from 'src/terrariums/infraestructure/ports/mysql';
+import { Terrariums } from '../../../../terrariums/infraestructure/ports/mysql';
 
 @Entity({ name: 'users' })
 export class User implements UserInterface {
@@ -19,10 +19,10 @@ export class User implements UserInterface {
   @Column({ unique: true, nullable: false, length: 45 })
   readonly username: string;
   @Column({ nullable: false })
-  passwordUser: string;
+  readonly passwordUser: string;
   @OneToOne(() => UserProfile, (user) => user.user, { cascade: true })
   @JoinColumn({ name: 'id_user_profile' })
-  userProfile: UserProfile;
+  readonly userProfile: UserProfile;
   @OneToMany(() => Terrariums, (terrariums) => terrariums.user)
-  terrariums: Terrariums[];
+  readonly terrariums: Terrariums[];
 }

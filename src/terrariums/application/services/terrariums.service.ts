@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CustomError } from 'src/shared/config/application/utils';
-import { UpdateTerrariumDto } from 'src/terrariums/domain/dto';
-import { TerrariumsInterface } from 'src/terrariums/domain/entities';
+import { CustomError } from '../../../shared/config/application/utils';
+import { UpdateTerrariumDto } from '../../domain/dto';
+import { TerrariumsInterface } from '../../domain/entities';
 import {
   Terrariums,
   TerrariumsProfile,
@@ -41,8 +41,9 @@ export class TerrariumsService {
   async findOneById(id: UpdateTerrariumDto): Promise<TerrariumsInterface> {
     try {
       const terrarium = await this.terrariumsRepository.findOneByOption(id);
-      if (terrarium)
+      if (terrarium) {
         throw new CustomError('NOT_FOUND', 'Terrario no encontrado');
+      }
       return terrarium;
     } catch (error) {
       throw CustomError.createCustomError(error.message);
@@ -54,8 +55,9 @@ export class TerrariumsService {
       const result =
         (await this.terrariumsRepository.delete(id)) &&
         (await this.terrariumsProfileRepository.delete(id));
-      if (!result.raw)
+      if (!result.raw) {
         throw new CustomError('NOT_FOUND', 'Terrario no encontrado');
+      }
     } catch (error) {
       throw CustomError.createCustomError(error.message);
     }

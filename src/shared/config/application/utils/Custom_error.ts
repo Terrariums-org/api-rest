@@ -7,10 +7,11 @@ export class CustomError extends Error {
     super(`${status} : ${message}`);
   }
 
-  public static createCustomError(message: string) {
+  public static createCustomError(message: string = '') {
     const statusName = message.split(' : ')[0];
-    if (message !== '')
+    if (message !== '') {
       throw new HttpException(message, HttpStatus[statusName]);
+    }
     throw new HttpException('Server error', HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

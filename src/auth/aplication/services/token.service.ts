@@ -4,9 +4,9 @@ import {
   PayloadInterface,
   DecodeTokenResInterface,
   DecodeTokenInterface,
-} from 'src/auth/domain/entities';
-import { TokenServiceRepository } from 'src/auth/domain/repositories/tokenServiceRepository';
-import { TokenRepositoryImp } from 'src/auth/infraestructure/ports/TokenRepositoryImp.port';
+} from '../../domain/entities';
+import { TokenServiceRepository } from '../../domain/repositories/tokenServiceRepository';
+import { TokenRepositoryImp } from '../../infraestructure/ports/TokenRepositoryImp.port';
 
 @Injectable()
 export class TokenService implements TokenServiceRepository {

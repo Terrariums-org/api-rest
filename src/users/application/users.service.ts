@@ -6,8 +6,8 @@ import { Repository } from 'typeorm';
 import { UserServiceRepository } from '../domain/repositories/userServiceRepository';
 import { UserInterface } from '../domain/entities';
 import { UserProfile } from '../infraestructure/ports/mysql/user_profile.entity';
-import { CustomError } from 'src/shared/config/application/utils/';
-import { HashedPasswordService } from 'src/auth/aplication/services/hashedPassword.service';
+import { CustomError } from '../../shared/config/application/utils/';
+import { HashedPasswordService } from '../../auth/aplication/services/hashedPassword.service';
 
 @Injectable()
 export class UsersService implements UserServiceRepository {
@@ -33,6 +33,7 @@ export class UsersService implements UserServiceRepository {
       };
       return await this.userRepository.save(newUser);
     } catch (err) {
+      console.log(err);
       throw CustomError.createCustomError(err.message);
     }
   }
@@ -42,7 +43,9 @@ export class UsersService implements UserServiceRepository {
       const result =
         (await this.userRepository.delete(id)) &&
         (await this.userProfileRepository.delete(id));
-      if (!result.raw) throw new CustomError('NOT_FOUND', 'No affected user');
+      if (!result.raw) {
+        throw new CustomError('NOT_FOUND', 'No affected user');
+      }
     } catch (err) {
       CustomError.createCustomError(err.message);
     }

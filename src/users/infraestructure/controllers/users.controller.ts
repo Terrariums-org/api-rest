@@ -1,6 +1,5 @@
 import {
   Controller,
-  Post,
   Body,
   Param,
   Delete,
@@ -9,27 +8,31 @@ import {
   ParseIntPipe,
   Inject,
   UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { UsersService } from '../../application/users.service';
 import { UpdateUserDto } from '../../domain/dto';
-import { AuthGuard } from 'src/shared/config/application/guards/auth.guard';
+import { AuthGuard } from '../../../shared/config/application/guards/auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('users')
 @UseGuards(AuthGuard)
+@ApiBearerAuth('JWT-auth')
 export class UsersController {
   constructor(
     @Inject(UsersService) private readonly usersService: UsersService,
   ) {}
 
-  @Post()
-  @HttpCode(HttpStatus.CREATED)
-  async create(@Body() createUser: UpdateUserDto) {
-    return this.usersService.updateService(createUser);
+  @Patch()
+  @HttpCode(HttpStatus.OK)
+  updateUser(@Body() updateUser: UpdateUserDto) {
+    return this.usersService.updateService(updateUser);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  async remove(@Param('id', ParseIntPipe) id: number) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.removeService(id);
   }
 }
