@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CustomError } from 'src/shared/config/application/utils';
 import { UpdateTerrariumDto } from 'src/terrariums/domain/dto';
@@ -7,15 +7,17 @@ import {
   Terrariums,
   TerrariumsProfile,
 } from 'src/terrariums/infraestructure/ports/mysql';
+import { terrariumsProfileRepositoryImp } from 'src/terrariums/infraestructure/ports/mysql/terrariumsProfileRepositoryImp';
+import { TerrariumsRepositoryImp } from 'src/terrariums/infraestructure/ports/mysql/terrariumsRepositoryImp';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class TerrariumsService {
   constructor(
-    @InjectRepository(Terrariums)
-    private readonly terrariumsRepository: Repository<Terrariums>,
-    @InjectRepository(TerrariumsProfile)
-    private readonly terrariumsProfileRepository: Repository<TerrariumsProfile>,
+    @Inject(Terrariums)
+    private readonly terrariumsRepository: TerrariumsRepositoryImp,
+    @Inject(TerrariumsProfile)
+    private readonly terrariumsProfileRepository: terrariumsProfileRepositoryImp,
   ) {}
 
   async create(
@@ -28,34 +30,18 @@ export class TerrariumsService {
     }
   }
 
-  async findAll(): Promise<TerrariumsInterface[]> {
+  async findAllByUser(user: UpdateTerrariumDto): Promise<TerrariumsInterface[]> {
     try {
-      const terrariums = await this.terrariumsRepository.find({
-        relations: {
-          user: true,
-          terrariumProfile: true,
-        },
-      });
-      if (!terrariums.length)
-        throw new CustomError('NO_CONTENT', 'No hay terrarios registrados');
-      return terrariums;
+      return await this.terrariumsRepository.findAllByOption(user);
     } catch (error) {
       throw CustomError.createCustomError(error.message);
     }
   }
 
-  async findOne(id: number): Promise<TerrariumsInterface> {
+  async findOneById(id: UpdateTerrariumDto): Promise<TerrariumsInterface> {
     try {
-      const terrarium = await this.terrariumsRepository.findOne({
-        where: {
-          id: id,
-        },
-        relations: {
-          user: true,
-          terrariumProfile: true,
-        },
-      });
-      if (!terrarium)
+      const terrarium = await this.terrariumsRepository.findOneByOption(id);
+      if (terrarium)
         throw new CustomError('NOT_FOUND', 'Terrario no encontrado');
       return terrarium;
     } catch (error) {
@@ -64,7 +50,7 @@ export class TerrariumsService {
   }
 
   async remove(id: number): Promise<void> {
-    try {
+    try {      
       const result =
         (await this.terrariumsRepository.delete(id)) &&
         (await this.terrariumsProfileRepository.delete(id));

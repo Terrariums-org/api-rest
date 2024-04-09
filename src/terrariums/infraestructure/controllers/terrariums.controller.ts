@@ -14,6 +14,7 @@ import { AuthGuard } from 'src/shared/config/application/guards/auth.guard';
 import { TerrariumsService } from 'src/terrariums/application/services/terrariums.service';
 import { CreateTerrariumDto } from 'src/terrariums/domain/dto';
 import { UpdateTerrariumDto } from 'src/terrariums/domain/dto';
+import { CreateUserDto } from 'src/users/domain/dto';
 
 @Controller('terrariums')
 @UseGuards(AuthGuard)
@@ -31,14 +32,14 @@ export class TerrariumsController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  findAll() {
-    return this.terrariumsService.findAll();
+  findAllByUser(@Body() user: CreateUserDto) {
+    return this.terrariumsService.findAllByUser(user);
   }
 
-  @Get(':id')
+  @Get()
   @HttpCode(HttpStatus.OK)
-  findOne(@Param('id') id: string) {
-    return this.terrariumsService.findOne(+id);
+  findOne(@Body() id: UpdateTerrariumDto) {
+    return this.terrariumsService.findOneById(id);
   }
 
   @Delete(':id')
