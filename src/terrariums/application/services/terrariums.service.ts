@@ -1,23 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { CustomError } from '../../../shared/config/application/utils';
 import { UpdateTerrariumDto } from '../../domain/dto';
 import { TerrariumsInterface } from '../../domain/entities';
-import {
-  Terrariums,
-  TerrariumsProfile,
-} from '../../infraestructure/ports/mysql';
-import { Repository } from 'typeorm';
+import { TerrariumsRepositoryImp } from '../../../terrariums/infraestructure/ports/mysql';
+import { TerrariumsProfileRepositoryImp } from '../../../terrariums/infraestructure/ports/mysql/terrariumsProfileRepositoryImp';
 import { QueueServiceRepositoryImp } from '../../../shared/connection/broker/application/services/queue.service.';
 import { ExchangeName } from '../../../shared/connection/broker/domain/entities/ExchangeName';
 
 @Injectable()
 export class TerrariumsService {
   constructor(
-    @InjectRepository(Terrariums)
-    private readonly terrariumsRepository: Repository<Terrariums>,
-    @InjectRepository(TerrariumsProfile)
-    private readonly terrariumsProfileRepository: Repository<TerrariumsProfile>,
+    @Inject(TerrariumsRepositoryImp)
+    private readonly terrariumsRepository: TerrariumsRepositoryImp,
+    @Inject(TerrariumsProfileRepositoryImp)
+    private readonly terrariumsProfileRepository: TerrariumsProfileRepositoryImp,
     @Inject(QueueServiceRepositoryImp)
     private readonly queueServiceRepository: QueueServiceRepositoryImp,
   ) {}
@@ -26,27 +22,21 @@ export class TerrariumsService {
     createTerrariumDto: UpdateTerrariumDto,
   ): Promise<TerrariumsInterface> {
     try {
-      const terrarium =
-        await this.terrariumsRepository.save(createTerrariumDto);
-      await this.queueServiceRepository.sendMessage(
-        terrarium,
-        ExchangeName,
-        'info',
-      );
-      return terrarium;
+      // const terrarium =
+      //   await this.terrariumsRepository.save(createTerrariumDto);
+      // console.log(terrarium);
+      await this.queueServiceRepository.sendMessage(createTerrariumDto, ExchangeName);
+      return createTerrariumDto as TerrariumsInterface;
     } catch (error) {
-      throw CustomError.createCustomError('INTERNAL_SERVER_ERROR');
+      throw CustomError.createCustomError(error.message);
     }
   }
 
-  async findAll(): Promise<TerrariumsInterface[]> {
+  async findAllByUser(
+    user: UpdateTerrariumDto,
+  ): Promise<TerrariumsInterface[]> {
     try {
-      const terrariums = await this.terrariumsRepository.find({
-        relations: {
-          user: true,
-          terrariumProfile: true,
-        },
-      });
+      const terrariums = await this.terrariumsRepository.findAllByOption(user);
       if (!terrariums.length) {
         throw new CustomError('NO_CONTENT', 'No hay terrarios registrados');
       }
@@ -56,18 +46,10 @@ export class TerrariumsService {
     }
   }
 
-  async findOne(id: number): Promise<TerrariumsInterface> {
+  async findOneById(id: number): Promise<TerrariumsInterface> {
     try {
-      const terrarium = await this.terrariumsRepository.findOne({
-        where: {
-          id: id,
-        },
-        relations: {
-          user: true,
-          terrariumProfile: true,
-        },
-      });
-      if (!terrarium) {
+      const terrarium = await this.terrariumsRepository.findOneByOption(id);
+      if (terrarium) {
         throw new CustomError('NOT_FOUND', 'Terrario no encontrado');
       }
       return terrarium;

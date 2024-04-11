@@ -1,1 +1,1 @@
-export const ExchangeName = 'exchange-metric';
+export const ExchangeName = 'mqtt.metrics';

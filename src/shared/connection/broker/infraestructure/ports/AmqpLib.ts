@@ -1,45 +1,34 @@
-import amqp, { ChannelWrapper } from 'amqp-connection-manager';
 import { QueueRepository } from '../../domain/repository/QueueRepository';
-import { Channel } from 'amqplib';
 import { Injectable } from '@nestjs/common';
 import { configService } from '../../../../config/domain';
+import { MqttClient, connect } from 'mqtt';
 
 @Injectable()
 export class QueueRepositoryImp implements QueueRepository {
   private readonly url: string = configService.get<string>('BROKER_HOST');
-  async createChannel(exchangeName: string): Promise<ChannelWrapper> {
+  async sendMessageToChannel(data, exchangeName): Promise<void> {
     try {
-      const conn = amqp.connect(this.url);
-      const channelWrapper = conn.createChannel({
-        setup: (channel: Channel) => {
-          return channel.assertExchange(exchangeName, 'topic');
-        },
+      const conn: MqttClient = connect(this.url, {
+        protocol: 'mqtt',
+        port: 1883,
+        username: 'guest',
+        password: 'guest',
       });
-      return channelWrapper;
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
-
-  async sendMessageToChannel(
-    data,
-    exchangeName,
-    routingKey: string,
-  ): Promise<void> {
-    try {
-      const channel = await this.createChannel(exchangeName);
-      const sent = await channel.publish(
-        exchangeName,
-        routingKey,
-        Buffer.from(JSON.stringify(data)),
-        {
-          persistent: true,
-        },
-      );
-      console.log(
-        sent + 'message send to :' + exchangeName,
-        'with data: ' + data,
-      );
+      conn.on('connect', () => {
+        console.log('connection established with broker ' + this.url);
+        conn.publish(
+          exchangeName,
+          Buffer.from(JSON.stringify(data)),
+          { qos: 0, retain: false },
+          (err) => {
+            if (err) {
+              console.error('error: ', err);
+            } else {
+              console.log('msg sent to exchange ' + exchangeName);
+            }
+          },
+        );
+      });
     } catch (error) {
       throw new Error(error);
     }

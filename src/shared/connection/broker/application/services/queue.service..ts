@@ -8,17 +8,9 @@ export class QueueServiceRepositoryImp implements QueueServiceRepository {
     @Inject(QueueRepositoryImp)
     private readonly queueRepository: QueueRepositoryImp,
   ) {}
-  async sendMessage(
-    data: unknown,
-    exchangeName: string,
-    routingKey = 'info',
-  ): Promise<void> {
+  async sendMessage(data: unknown, exchangeName: string): Promise<void> {
     try {
-      await this.queueRepository.sendMessageToChannel(
-        data,
-        exchangeName,
-        routingKey,
-      );
+      await this.queueRepository.sendMessageToChannel(data, exchangeName);
     } catch (error) {
       throw new Error(error);
     }

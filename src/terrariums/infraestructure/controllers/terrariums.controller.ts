@@ -11,10 +11,11 @@ import {
   UseGuards,
   ParseIntPipe,
 } from '@nestjs/common';
-import { AuthGuard } from '../../../shared/config/application/guards/auth.guard';
-import { TerrariumsService } from '../../application/services/terrariums.service';
-import { CreateTerrariumDto } from '../../domain/dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/shared/config/application/guards/auth.guard';
+import { TerrariumsService } from 'src/terrariums/application/services/terrariums.service';
+import { CreateTerrariumDto } from 'src/terrariums/domain/dto';
+import { CreateUserDto } from 'src/users/domain/dto';
 
 @ApiTags('Terrariums')
 @Controller('terrariums')
@@ -34,14 +35,14 @@ export class TerrariumsController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  findAll() {
-    return this.terrariumsService.findAll();
+  findAllByUser(@Body() user: CreateUserDto) {
+    return this.terrariumsService.findAllByUser(user);
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.terrariumsService.findOne(id);
+  findOne(@Param('id', ParseIntPipe) id : number ) {
+    return this.terrariumsService.findOneById(id);
   }
 
   @Delete(':id')
