@@ -37,6 +37,7 @@ bun.lockb
 !.vscode/extensions.json
 
 # dotenv environment variable files
+.dev.env
 .production.env
 .env
 .env.development.local

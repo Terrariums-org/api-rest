@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { QueueServiceRepository } from '../../domain/repository';
-import { QueueRepositoryImp } from '../../infraestructure/ports/AmqpLib';
+import { QueueRepositoryImp } from '../../infraestructure/ports/MqttLib';
 
 @Injectable()
 export class QueueServiceRepositoryImp implements QueueServiceRepository {

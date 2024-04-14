@@ -1,21 +1,14 @@
-import { Injectable } from '@nestjs/common';
 import { TerrariumsInterface } from 'src/terrariums/domain/entities';
-import { TerrariumPortRepository } from 'src/terrariums/domain/repositories/terrariumPortRepository';
+import { TerrariumPortRepository } from 'src/terrariums/infraestructure/entities/terrariumPortRepository';
 import { Repository } from 'typeorm';
 import { Terrariums } from './terrariums.entity';
 import { UpdateTerrariumDto } from 'src/terrariums/domain/dto';
 import { CustomError } from 'src/shared/config/application/utils';
-import { InjectRepository } from '@nestjs/typeorm';
 
-@Injectable()
-export class TerrariumsRepositoryImp
-  extends Repository<Terrariums>
-  implements TerrariumPortRepository
-{
-  @InjectRepository(Terrariums) 
-  private readonly terrariumsRepository : Repository<Terrariums>;
-  
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const TerrariumsRepositoryImp: Pick<TerrariumPortRepository, any> = {
   async findAllByOption(
+    this: Repository<Terrariums>,
     options: UpdateTerrariumDto,
   ): Promise<TerrariumsInterface[]> {
     try {
@@ -26,21 +19,22 @@ export class TerrariumsRepositoryImp
           terrariumProfile: true,
         },
       });
-      if (terrariums.length) {
+      if (!terrariums.length) {
         throw new CustomError('NO_CONTENT', 'No hay terrarios registrados');
       }
       return terrariums;
     } catch (error) {
       throw CustomError.createCustomError('INTERNAL_SERVER_ERROR');
     }
-  }
+  },
 
   async findOneByOption(
-    id : number,
+    this: Repository<Terrariums>,
+    options: UpdateTerrariumDto,
   ): Promise<TerrariumsInterface> {
     try {
-      const terrariums = await this.terrariumsRepository.findOne({
-        where: {id},
+      const terrariums = await this.findOne({
+        where: options,
         relations: {
           user: true,
           terrariumProfile: true,
@@ -51,7 +45,7 @@ export class TerrariumsRepositoryImp
       }
       return terrariums;
     } catch (error) {
-      throw CustomError.createCustomError(error.message);
+      throw CustomError.createCustomError('INTERNAL_SERVER_ERROR');
     }
-  }
-}
+  },
+};
