@@ -11,6 +11,7 @@ import {
   UseGuards,
   ParseIntPipe,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/shared/config/application/guards/auth.guard';
 import { TerrariumsService } from 'src/terrariums/application/services/terrariums.service';
 import { CreateTerrariumDto } from 'src/terrariums/domain/dto';
