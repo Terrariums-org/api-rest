@@ -4,6 +4,9 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Terrariums, TerrariumsProfile } from '../infraestructure/ports/mysql';
 import { mockTerrariumsRepository } from './mocks/terrariumRepository.mock';
 import { TerrariumsInterface } from '../domain/entities';
+import { QueueServiceRepositoryImp } from '../../shared/connection/broker/application/services/queue.service.';
+import { QueueRepositoryImp } from '../../shared/connection/broker/infraestructure/ports/MqttLib';
+import { TerrariumsProfileRepositoryImp } from '../infraestructure/ports/mysql/terrariumsProfileRepositoryImp';
 
 describe('Terrariums service', () => {
   let terrariumsService: TerrariumsService;
@@ -11,12 +14,18 @@ describe('Terrariums service', () => {
     const moduleRef = await Test.createTestingModule({
       providers: [
         TerrariumsService,
+        QueueServiceRepositoryImp,
+        QueueRepositoryImp,
         {
           provide: getRepositoryToken(Terrariums),
           useValue: mockTerrariumsRepository,
         },
         {
           provide: getRepositoryToken(TerrariumsProfile),
+          useValue: mockTerrariumsRepository,
+        },
+        {
+          provide: getRepositoryToken(TerrariumsProfileRepositoryImp),
           useValue: mockTerrariumsRepository,
         },
       ],
@@ -28,24 +37,26 @@ describe('Terrariums service', () => {
     expect(terrariumsService).toBeDefined();
   });
 
-  it('Should return all terrariums', async () => {
-    const terrariumList = await terrariumsService.findAll();
-    expect(terrariumList).toHaveLength(4);
+  it('Should return all terrariums by user 1', async () => {
+    const terrariumList = await terrariumsService.findAllByUser(1);
+    expect(terrariumList).toHaveLength(1);
     expect(terrariumList).toMatchObject<TerrariumsInterface[]>(terrariumList);
-    expect(mockTerrariumsRepository.find).toHaveBeenCalledTimes(1);
+    expect(mockTerrariumsRepository.findAllByOption).toHaveBeenCalledTimes(1);
   });
 
   describe('Find one terrarium', () => {
     it('Should return a terrarium', async () => {
-      const terrariumResult = await terrariumsService.findOne(1);
+      const terrariumResult = await terrariumsService.findOneById(1);
       expect(terrariumResult).not.toBeNull();
       expect(terrariumResult).toMatchObject<TerrariumsInterface>(
         terrariumResult,
       );
-      expect(mockTerrariumsRepository.findOne).toHaveBeenCalledTimes(1);
+      expect(mockTerrariumsRepository.findOneByOption).toHaveBeenCalledTimes(1);
     });
     it('Should return a \'NOT_FOUND\' error', async () => {
-      await expect(terrariumsService.findOne(0)).rejects.toThrow('NOT_FOUND');
+      await expect(terrariumsService.findOneById(0)).rejects.toThrow(
+        'NOT_FOUND',
+      );
     });
   });
 

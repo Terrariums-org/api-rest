@@ -1,9 +1,9 @@
-import { TerrariumsInterface } from 'src/terrariums/domain/entities';
-import { TerrariumPortRepository } from 'src/terrariums/infraestructure/entities/terrariumPortRepository';
+import { TerrariumsInterface } from '../../../domain/entities';
+import { TerrariumPortRepository } from '../../entities/terrariumPortRepository';
 import { Repository } from 'typeorm';
 import { Terrariums } from './terrariums.entity';
-import { UpdateTerrariumDto } from 'src/terrariums/domain/dto';
-import { CustomError } from 'src/shared/config/application/utils';
+import { UpdateTerrariumDto } from '../../../domain/dto';
+import { CustomError } from '../../../../shared/config/application/utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const TerrariumsRepositoryImp: Pick<TerrariumPortRepository, any> = {

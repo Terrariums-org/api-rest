@@ -1,4 +1,4 @@
-import { CreateTerrariumDto } from 'src/terrariums/domain/dto';
+import { CreateTerrariumDto } from '../../domain/dto';
 import { terrariumsStub } from '../stub/terrariums.stub';
 import { TerrariumsInterface } from '../../domain/entities';
 
@@ -10,10 +10,10 @@ export const mockTerrariumsService = {
         return terrariumReq;
       },
     ),
-  findAll: jest.fn().mockImplementation(() => {
-    return terrariumsStub();
+  findAllByUser: jest.fn().mockImplementation((idUser: number) => {
+    return terrariumsStub().filter((terrarium) => terrarium.user.id === idUser);
   }),
-  findOne: jest
+  findOneById: jest
     .fn()
     .mockImplementation((idTerrarium: number): TerrariumsInterface => {
       return (

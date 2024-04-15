@@ -1,5 +1,5 @@
 import { TerrariumsProfileInterface } from './terrariums_profile';
-import { UpdateUserDto } from 'src/users/domain/dto';
+import { UpdateUserDto } from '../../../users/domain/dto';
 
 export interface TerrariumsInterface {
   id: number;
