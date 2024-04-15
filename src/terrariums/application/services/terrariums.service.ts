@@ -29,7 +29,6 @@ export class TerrariumsService {
       await this.queueService.sendMessage(terrarium, ExchangeName);
       return terrarium;
     } catch (error) {
-      console.log(error);
       throw CustomError.createCustomError('INTERNAL_SERVER_ERROR');
     }
   }
@@ -68,7 +67,6 @@ export class TerrariumsService {
         (await this.terrariumsRepository.delete(id)) &&
         (await this.terrariumsProfileRepository.delete(id));
       if (!result.raw) {
-        console.log('first')
         throw new CustomError('NOT_FOUND', 'Terrario no encontrado');
       }
     } catch (error) {
