@@ -1,16 +1,17 @@
-import { Injectable } from '@nestjs/common';
-import { TerrariumsInterface } from 'src/terrariums/domain/entities';
-import { TerrariumPortRepository } from 'src/terrariums/domain/repositories/terrariumPortRepository';
+import { TerrariumsInterface } from '../../../domain/entities';
+import { TerrariumPortRepository } from '../../entities/terrariumPortRepository';
 import { Repository } from 'typeorm';
 import { Terrariums } from './terrariums.entity';
-import { UpdateTerrariumDto } from 'src/terrariums/domain/dto';
-import { CustomError } from 'src/shared/config/application/utils';
+import { UpdateTerrariumDto } from '../../../domain/dto';
+import { CustomError } from '../../../../shared/config/application/utils';
 
-@Injectable()
-export class TerrariumsRepositoryImp extends Repository<Terrariums> implements TerrariumPortRepository {
-    async findAllByOption(options : UpdateTerrariumDto ): Promise<TerrariumsInterface[]> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const TerrariumsRepositoryImp: Pick<TerrariumPortRepository, any> = {
+  async findAllByOption(
+    this: Repository<Terrariums>,
+    options: UpdateTerrariumDto,
+  ): Promise<TerrariumsInterface[]> {
     try {
-      
       const terrariums = await this.find({
         where: options,
         relations: {
@@ -18,15 +19,19 @@ export class TerrariumsRepositoryImp extends Repository<Terrariums> implements T
           terrariumProfile: true,
         },
       });
-      if (terrariums.length)
+      if (!terrariums.length) {
         throw new CustomError('NO_CONTENT', 'No hay terrarios registrados');
+      }
       return terrariums;
     } catch (error) {
       throw CustomError.createCustomError('INTERNAL_SERVER_ERROR');
     }
-  }
+  },
 
-  async findOneByOption(options : UpdateTerrariumDto): Promise<TerrariumsInterface> {
+  async findOneByOption(
+    this: Repository<Terrariums>,
+    options: UpdateTerrariumDto,
+  ): Promise<TerrariumsInterface> {
     try {
       const terrariums = await this.findOne({
         where: options,
@@ -35,11 +40,12 @@ export class TerrariumsRepositoryImp extends Repository<Terrariums> implements T
           terrariumProfile: true,
         },
       });
-      if (terrariums)
+      if (!terrariums) {
         throw new CustomError('NO_CONTENT', 'No existe este terrario');
+      }
       return terrariums;
     } catch (error) {
       throw CustomError.createCustomError('INTERNAL_SERVER_ERROR');
     }
-  }
-}
+  },
+};

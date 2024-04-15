@@ -38,11 +38,11 @@ describe('Terrariums controller', () => {
     expect(mockTerrariumsService.create).toHaveBeenCalledTimes(1);
   });
 
-  it('should return an array of terrariums', async () => {
-    const terrariumList = await terrariumsController.findAll();
-    expect(terrariumList).toHaveLength(4);
+  it('should return an array of terrariums by user 1', async () => {
+    const terrariumList = await terrariumsController.findAllByUser(1);
+    expect(terrariumList).toHaveLength(1);
     expect(terrariumList).toMatchObject<TerrariumsInterface[]>(terrariumList);
-    expect(mockTerrariumsService.findAll).toHaveBeenCalledTimes(1);
+    expect(mockTerrariumsService.findAllByUser).toHaveBeenCalledTimes(1);
   });
 
   describe('Find one terrarium', () => {
@@ -52,7 +52,7 @@ describe('Terrariums controller', () => {
       expect(terrariumResult).toMatchObject<TerrariumsInterface>(
         terrariumResult,
       );
-      expect(mockTerrariumsService.findAll).toHaveBeenCalledTimes(1);
+      expect(mockTerrariumsService.findOneById).toHaveBeenCalledTimes(1);
     });
     it('Should return null', () => {
       expect(terrariumsController.findOne(-1)).toBeNull();

@@ -18,6 +18,7 @@ export class TokenService implements TokenServiceRepository {
     try {
       const token = await this.tokenRepositoryImp.generateToken(payload);
       const tokenObj: TokenResponse = {
+        id: payload.id,
         token,
       };
       return tokenObj;

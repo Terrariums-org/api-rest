@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './shared/config/domain/configEnv';
 import { TerrariumsModule } from './terrariums/infraestructure/terrariums.module';
 import { AuthModule } from './auth/infraestructure/auth.module';
+import { BrokerModule } from './shared/connection/broker/infraestructure/broker.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { AuthModule } from './auth/infraestructure/auth.module';
     UsersModule,
     TerrariumsModule,
     AuthModule,
+    BrokerModule,
   ],
 })
 export class AppModule {}

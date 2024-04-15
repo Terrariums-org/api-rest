@@ -11,11 +11,10 @@ import {
   UseGuards,
   ParseIntPipe,
 } from '@nestjs/common';
-import { AuthGuard } from 'src/shared/config/application/guards/auth.guard';
-import { TerrariumsService } from 'src/terrariums/application/services/terrariums.service';
-import { CreateTerrariumDto } from 'src/terrariums/domain/dto';
-import { UpdateTerrariumDto } from 'src/terrariums/domain/dto';
-import { CreateUserDto } from 'src/users/domain/dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '../../../shared/config/application/guards/auth.guard';
+import { TerrariumsService } from '../../application/services/terrariums.service';
+import { CreateTerrariumDto } from '../../domain/dto';
 
 @ApiTags('Terrariums')
 @Controller('terrariums')
@@ -33,15 +32,15 @@ export class TerrariumsController {
     return this.terrariumsService.create(createTerrariumDto);
   }
 
-  @Get()
+  @Get('/user/:id')
   @HttpCode(HttpStatus.OK)
-  findAllByUser(@Body() user: CreateUserDto) {
-    return this.terrariumsService.findAllByUser(user);
+  findAllByUser(@Param('id', ParseIntPipe) id : number ) {
+    return this.terrariumsService.findAllByUser(id);
   }
 
-  @Get()
+  @Get(':id')
   @HttpCode(HttpStatus.OK)
-  findOne(@Body() id: UpdateTerrariumDto) {
+  findOne(@Param('id', ParseIntPipe) id : number ) {
     return this.terrariumsService.findOneById(id);
   }
 

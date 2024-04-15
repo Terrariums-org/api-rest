@@ -1,3 +1,3 @@
 export enum TerrariumFilterBy {
-    id = "id"
+    id = 'id'
 }
