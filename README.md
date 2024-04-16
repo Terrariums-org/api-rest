@@ -1,5 +1,15 @@
 ## Description
-If you want to start the project, create a new file called ".dev.env" with the following variables
+If you want to start the project:
+create a new file called ".dev.env" with the following variables
+
+```bash
+# secretword jwt
+$ JWT_SECRET = YOUR_JWT_SECRET
+# your jumps for bcrypt
+$ BCRYPT_JUMPS = YOUR_BCRYPT_JUMPS
+```
+
+create a new file called ".production.env" with the following variables
 
 ```bash
 # database host
@@ -7,11 +17,15 @@ $ HOST = YOUR_DB_HOST
 # database port
 $ PORT = YOUR_DB_PORT
 # database username
-$ USER = YOUR_DB_USERNAME
+$ USERDB = YOUR_DB_USERNAME
 # database password
 $ PASSWORD = YOUR_DB_PASSWORD
 # database name
 $ DATABASE = YOUR_DB_NAME
+# secretword jwt
+$ JWT_SECRET = YOUR_JWT_SECRET
+# your jumps for bcrypt
+$ BCRYPT_JUMPS = YOUR_BCRYPT_JUMPS
 ```
 
 ## Installation

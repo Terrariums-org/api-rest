@@ -27,6 +27,7 @@ lerna-debug.log*
 *.launch
 .settings/
 *.sublime-workspace
+bun.lockb
 
 # IDE - VSCode
 .vscode/*
@@ -37,6 +38,7 @@ lerna-debug.log*
 
 # dotenv environment variable files
 .dev.env
+.production.env
 .env
 .env.development.local
 .env.test.local

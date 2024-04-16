@@ -1,10 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ConfigService } from '@nestjs/config';
+import { setUp } from './shared/config/application/utils';
+
 async function startServer() {
   const app = await NestFactory.create(AppModule);
-  app.get(ConfigService);
-  await app.listen(3000);
+  const setUpApp = setUp(app);
+  await setUpApp.listen(3000);
 }
 
 startServer();

@@ -1,20 +1,23 @@
-import { TerrariumsProfileInterface } from 'src/terrariums/domain/entities';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { TerrariumsProfileInterface } from '../../../domain/entities';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Terrariums } from './terrariums.entity';
 
 @Entity({ name: 'terrariums_profile' })
 export class TerrariumsProfile implements TerrariumsProfileInterface {
   @PrimaryGeneratedColumn()
-  id: number;
+    id: number;
   @Column({ type: 'float' })
-  max_temp: string;
+    max_temp: number;
   @Column({ type: 'float' })
-  min_temp: string;
+    min_temp: number;
   @Column({ type: 'float' })
-  max_humidity: string;
+    max_humidity: number;
   @Column({ type: 'float' })
-  min_humidity: string;
+    min_humidity: number;
   @Column({ type: 'float' })
-  max_uv: string;
+    max_uv: number;
   @Column({ type: 'float' })
-  min_uv: string;
+    min_uv: number;
+  @OneToOne(() => Terrariums, (terrarium) => terrarium.terrariumProfile)
+    terrarium: Terrariums;
 }
