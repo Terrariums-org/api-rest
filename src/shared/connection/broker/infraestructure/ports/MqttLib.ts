@@ -18,7 +18,7 @@ export class QueueRepositoryImp implements QueueRepository {
         console.log('connection established with broker ' + this.url);
         conn.publish(
           exchangeName,
-          Buffer.from(JSON.stringify(data)),
+          JSON.stringify(data),
           { qos: 0, retain: false },
           (err) => {
             if (err) {
