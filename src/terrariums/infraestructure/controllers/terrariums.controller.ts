@@ -1,34 +1,52 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { TerrariumsService } from 'src/terrariums/application/services/terrariums.service';
-import { CreateTerrariumDto } from 'src/terrariums/domain/dto';
-import { UpdateTerrariumDto } from 'src/terrariums/domain/dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  Inject,
+  UseGuards,
+  ParseIntPipe,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '../../../shared/config/application/guards/auth.guard';
+import { TerrariumsService } from '../../application/services/terrariums.service';
+import { CreateTerrariumDto } from '../../domain/dto';
 
+@ApiTags('Terrariums')
 @Controller('terrariums')
+@UseGuards(AuthGuard)
+@ApiBearerAuth('JWT-auth')
 export class TerrariumsController {
-  constructor(private readonly terrariumsService: TerrariumsService) {}
+  constructor(
+    @Inject(TerrariumsService)
+    private readonly terrariumsService: TerrariumsService,
+  ) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   create(@Body() createTerrariumDto: CreateTerrariumDto) {
     return this.terrariumsService.create(createTerrariumDto);
   }
 
-  @Get()
-  findAll() {
-    return this.terrariumsService.findAll();
+  @Get('/user/:id')
+  @HttpCode(HttpStatus.OK)
+  findAllByUser(@Param('id', ParseIntPipe) id : number ) {
+    return this.terrariumsService.findAllByUser(id);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.terrariumsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTerrariumDto: UpdateTerrariumDto) {
-    return this.terrariumsService.update(+id, updateTerrariumDto);
+  @HttpCode(HttpStatus.OK)
+  findOne(@Param('id', ParseIntPipe) id : number ) {
+    return this.terrariumsService.findOneById(id);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.terrariumsService.remove(+id);
+  @HttpCode(HttpStatus.OK)
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.terrariumsService.remove(id);
   }
 }

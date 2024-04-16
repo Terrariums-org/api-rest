@@ -1,5 +1,5 @@
-import { TerrariumsInterface } from 'src/terrariums/domain/entities';
-import { User } from 'src/users/infraestructure/ports/mysql/user.entity';
+import { TerrariumsInterface } from '../../../domain/entities';
+import { User } from '../../../../users/infraestructure/ports/mysql/user.entity';
 import {
   Column,
   Entity,
@@ -13,12 +13,15 @@ import { TerrariumsProfile } from './terrariums_profile.entity';
 @Entity({ name: 'terrariums' })
 export class Terrariums implements TerrariumsInterface {
   @PrimaryGeneratedColumn()
-  id: number;
+    id: number;
   @Column({ length: 60 })
-  name: string;
+    name: string;
   @ManyToOne(() => User, (user) => user.terrariums)
-  id_user: User;
-  @OneToOne(() => TerrariumsProfile)
+  @JoinColumn({ name: 'id_user' })
+    user: User;
+  @OneToOne(() => TerrariumsProfile, (terrarium) => terrarium.terrarium, {
+    cascade: true,
+  })
   @JoinColumn({ name: 'id_terrarium_profile' })
-  id_terrarium_profile: TerrariumsProfile;
+    terrariumProfile: TerrariumsProfile;
 }
