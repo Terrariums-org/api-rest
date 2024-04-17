@@ -16,6 +16,7 @@ export const userStub = (): UserInterface[] => {
       terrariums: [
         {
           id: 1,
+          codeEsp : '0123456789',
           name: 'Terrario de Juan',
           terrariumProfile: {
             id: 1,
@@ -43,6 +44,7 @@ export const userStub = (): UserInterface[] => {
       terrariums: [
         {
           id: 2,
+          codeEsp : '0123456789',
           name: 'Terrario de Ana',
           terrariumProfile: {
             id: 2,
@@ -70,6 +72,7 @@ export const userStub = (): UserInterface[] => {
       terrariums: [
         {
           id: 3,
+          codeEsp : '0123456789',
           name: 'Terrario de Pedro',
           terrariumProfile: {
             id: 3,
@@ -83,6 +86,7 @@ export const userStub = (): UserInterface[] => {
         },
         {
           id: 4,
+          codeEsp : '0123456789',
           name: 'Terrario de Pedro 2',
           terrariumProfile: {
             id: 4,

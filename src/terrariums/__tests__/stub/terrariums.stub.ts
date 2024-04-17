@@ -4,6 +4,7 @@ export const terrariumsStub = (): CreateTerrariumDto[] => {
   return [
     {
       id: 1,
+      codeEsp : '0123456789',
       name: 'Terrario de Juan',
       user: {
         id: 1,
@@ -25,6 +26,7 @@ export const terrariumsStub = (): CreateTerrariumDto[] => {
     {
       id: 2,
       name: 'Terrario de Ana',
+      codeEsp : '0123456789',
       user: {
         id: 2,
         email: 'ana@example.com',
@@ -44,6 +46,7 @@ export const terrariumsStub = (): CreateTerrariumDto[] => {
     },
     {
       id: 3,
+      codeEsp : '0123456789',
       name: 'Terrario de Pedro',
       user: {
         id: 3,
@@ -63,6 +66,7 @@ export const terrariumsStub = (): CreateTerrariumDto[] => {
       },
     },
     {
+      codeEsp : '0123456789',
       id: 4,
       name: 'Terrario de Pedro 2',
       user: {

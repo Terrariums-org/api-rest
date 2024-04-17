@@ -20,19 +20,7 @@ export class TerrariumsService {
     private readonly queueService: QueueServiceRepositoryImp,
   ) {}
 
-  async create(
-    createTerrariumDto: UpdateTerrariumDto,
-  ): Promise<TerrariumsInterface> {
-    try {
-      const terrarium =
-        await this.terrariumsRepository.save(createTerrariumDto);
-      await this.queueService.sendMessage(terrarium, ExchangeName);
-      return terrarium;
-    } catch (error) {
-      throw CustomError.createCustomError('INTERNAL_SERVER_ERROR');
-    }
-  }
-
+  
   async findAllByUser(id: number): Promise<TerrariumsInterface[]> {
     try {
       const terrariums = await this.terrariumsRepository.findAllByOption({
@@ -60,7 +48,20 @@ export class TerrariumsService {
       throw CustomError.createCustomError(error.message);
     }
   }
-
+  
+  async create(
+    createTerrariumDto: UpdateTerrariumDto,
+  ): Promise<TerrariumsInterface> {
+    try {
+      const terrarium =
+        await this.terrariumsRepository.save(createTerrariumDto);
+      await this.queueService.sendMessage(terrarium, ExchangeName);
+      console.log(terrarium);
+      return terrarium;
+    } catch (error) {
+      throw CustomError.createCustomError('INTERNAL_SERVER_ERROR');
+    }
+  }
   async remove(id: number): Promise<void> {
     try {
       const result =

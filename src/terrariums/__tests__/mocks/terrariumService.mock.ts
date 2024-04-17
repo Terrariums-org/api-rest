@@ -17,9 +17,9 @@ export const mockTerrariumsService = {
     .fn()
     .mockImplementation((idTerrarium: number): TerrariumsInterface => {
       return (
-        terrariumsStub().filter(
+        (terrariumsStub().filter(
           (terrarium) => terrarium.id === idTerrarium,
-        )[0] ?? null
+        )[0] as TerrariumsInterface) ?? null
       );
     }),
   remove: jest.fn().mockImplementation((idTerrarium: number) => {
