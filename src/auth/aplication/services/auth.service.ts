@@ -46,13 +46,17 @@ export class AuthService implements AuthServiceRepository {
   }
   async registerService(user: CreateUserDto): Promise<TokenResponse> {
     try {
-      const existingUser = await this.userRepository.findOne({
+      const existingUserByEmail = await this.userRepository.findOne({
         where: {
           email: user?.email,
+        },
+      });
+      const existingUserByUsername = await this.userRepository.findOne({
+        where: {
           username: user?.username,
         },
       });
-      if (!existingUser) {
+      if (!existingUserByEmail && !existingUserByUsername) {
         const { passwordUser } = user;
         //encriptar contraseña
         const passwordHashed =
@@ -65,11 +69,17 @@ export class AuthService implements AuthServiceRepository {
         const { id, username } = userCreated;
         const token = await this.tokenService.signToken({ id, username });
         return token;
+      } else if (existingUserByEmail) {
+        throw new CustomError(
+          'CONFLICT',
+          `usuario con email: ${user?.email} existente`,
+        );
+      } else {
+        throw new CustomError(
+          'CONFLICT',
+          `usuario con nombre: ${user?.username} existente`,
+        );
       }
-      throw new CustomError(
-        'CONFLICT',
-        `usuario con email: ${user?.email} existente`,
-      );
     } catch (error) {
       throw CustomError.createCustomError(error.message);
     }
