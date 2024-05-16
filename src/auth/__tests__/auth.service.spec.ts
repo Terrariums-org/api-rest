@@ -102,7 +102,7 @@ describe('Auth service', () => {
         };
         tokenResponse = await authService.registerService(userReq);
         expect(tokenResponse).not.toBeNull();
-        expect(mockUsersRepository.findOne).toHaveBeenCalledTimes(4);
+        expect(mockUsersRepository.findOne).toHaveBeenCalledTimes(5);
       });
       it('The token returned must be valid', async () => {
         const decodeToken = await tokenService.decodeToken(tokenResponse.token);
@@ -130,7 +130,7 @@ describe('Auth service', () => {
         await expect(authService.registerService(userReq)).rejects.toThrow(
           'CONFLICT',
         );
-        expect(mockUsersRepository.findOne).toHaveBeenCalledTimes(5);
+        expect(mockUsersRepository.findOne).toHaveBeenCalledTimes(7);
       });
     });
   });
