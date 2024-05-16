@@ -26,7 +26,12 @@ export class AuthService implements AuthServiceRepository {
         },
       });
       if (loginUser) {
-        const { username, id, passwordUser: passwordOriginal } = loginUser;
+        const {
+          username,
+          id,
+          passwordUser: passwordOriginal,
+          email,
+        } = loginUser;
         const { passwordUser: passwordReq } = user;
         const isValid = await this.hashedPasswordService.comparePassword(
           passwordOriginal,
@@ -35,7 +40,7 @@ export class AuthService implements AuthServiceRepository {
         if (!isValid) {
           throw new CustomError('UNAUTHORIZED', 'Credenciales invalidas');
         }
-        const token = this.tokenService.signToken({ id, username });
+        const token = this.tokenService.signToken({ id, username, email });
         return token;
       } else {
         throw new CustomError('NOT_FOUND', 'Credenciales Invalidas');
@@ -66,8 +71,12 @@ export class AuthService implements AuthServiceRepository {
           passwordUser: passwordHashed,
         };
         const userCreated = await this.userRepository.save(newUser);
-        const { id, username } = userCreated;
-        const token = await this.tokenService.signToken({ id, username });
+        const { id, username, email } = userCreated;
+        const token = await this.tokenService.signToken({
+          id,
+          username,
+          email,
+        });
         return token;
       } else if (existingUserByEmail) {
         throw new CustomError(
