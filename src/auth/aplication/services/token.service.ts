@@ -20,6 +20,7 @@ export class TokenService implements TokenServiceRepository {
       const tokenObj: TokenResponse = {
         id: payload.id,
         token,
+        email: payload.email,
       };
       return tokenObj;
     } catch (error) {
