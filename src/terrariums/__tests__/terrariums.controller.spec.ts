@@ -58,8 +58,7 @@ describe('Terrariums controller', () => {
       expect(terrariumsController.findOne(-1)).toBeNull();
     });
   });
-  
-  it('Should delete a user', () => {
+  it('Should delete a terrarium', () => {
     expect(terrariumsController.remove(1)).toEqual(
       'terrarium with id 1 deleted ',
     );
